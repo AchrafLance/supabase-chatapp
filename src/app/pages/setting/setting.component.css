@@ -1,0 +1,27 @@
+.dynamic-delete-button-container{
+display:flex; 
+justify-content: center;
+align-items: center;
+}
+
+.dynamic-delete-button {
+  font-size: 1.5rem;
+    cursor: pointer;
+    color: #999;
+    transition: all 0.3s;
+    margin-top: 10px;
+
+  }
+
+  .dynamic-delete-button:hover {
+    color: rgb(197, 32, 32);
+  }
+
+  .school-input {
+    width: 100%;
+    margin-right: 8px;
+  }
+
+  .add-button {
+    width: 100%;
+  }
