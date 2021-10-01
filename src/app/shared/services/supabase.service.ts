@@ -119,18 +119,26 @@ export class SupabaseService {
       id: this.user.id
     })
   }
-
-  updateUserStatus(user: User) {
-    return this.supabase
-      .from('users')
-      .update({isActive: user.isActive})
-      .eq('id', user.id);
-  }
-
   getUserList() {
     return this.supabase
       .from('users')
       .select('*');
+  }
+
+  makeUserOnline(){
+    return this.supabase.from("users").update({
+      isOnline: true
+    }).match({
+      id: this.user.id
+    })
+  }
+
+  makeUserOffline(){
+    return this.supabase.from("users").update({
+      isOnline: false
+    }).match({
+      id: this.user.id
+    })
   }
 
 }

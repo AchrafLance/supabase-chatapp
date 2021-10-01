@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 
 import { User } from '../interfaces/user.type';
 import { SupabaseService } from './supabase.service';
+import { UserService } from './user.service';
 
 const USER_AUTH_API_URL = '/api-url';
 
@@ -15,7 +16,9 @@ export class AuthenticationService {
     public currentUserSubject: BehaviorSubject<any>;
     public currentUser: Observable<any>;
 
-    constructor(private http: HttpClient, private supabase:SupabaseService) {
+    constructor(private http: HttpClient, 
+                private supabase:SupabaseService,
+                private userService: UserService) {
         this.currentUserSubject = new BehaviorSubject<any>(this.supabase.user);
         this.currentUser = this.currentUserSubject.asObservable();
     }
@@ -40,9 +43,10 @@ export class AuthenticationService {
 
     }
 
-    logout() {
+    async logout() {
+        await this.userService.makeUserOffline()
         localStorage.removeItem('currentUser');
         this.currentUserSubject.next(null);
-        this.supabase.signout(); 
+        this.supabase.signout();       
     }
 }

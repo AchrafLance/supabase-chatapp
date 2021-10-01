@@ -6,7 +6,9 @@ import { Files } from '../interfaces/file-manager.type';
 import { Mail } from '../interfaces/mail.type';
 import { ProjectList } from '../interfaces/project-list.type';
 
-@Injectable()
+@Injectable({
+    providedIn:"root"
+})
 export class AppsService {
     constructor(private http: HttpClient) {}
 

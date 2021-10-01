@@ -11,7 +11,7 @@ import { AuthGuard } from './authentication/authentication.guard';
 const appRoutes: Routes = [
     {
         path: '',
-        redirectTo: '/dashboard/home',
+        redirectTo: '/pages/chat',
         pathMatch: 'full',
     },
     { 

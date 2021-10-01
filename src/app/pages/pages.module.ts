@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from "@angular/common";
 import { SharedModule } from '../shared/shared.module';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PagesRoutingModule } from './pages-routing.module';
 
 import { NzCardModule } from 'ng-zorro-antd/card';
@@ -28,6 +28,15 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 
 import { ProfileComponent } from './profile/profile.component';
 import { SettingComponent } from './setting/setting.component';
+import { NzBadgeModule } from 'ng-zorro-antd/badge';
+import { NzProgressModule } from 'ng-zorro-antd/progress';
+import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
+import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
+import { NzTimelineModule } from 'ng-zorro-antd/timeline';
+import { NzCalendarModule } from 'ng-zorro-antd/calendar';
+import { ChatComponent } from './chat/chat.component';
+
+
 
 const antdModule = [
     NzCardModule,
@@ -50,7 +59,16 @@ const antdModule = [
     NzToolTipModule,
     NzModalModule,
     NzMessageModule,
-    NzInputModule
+    NzInputModule, 
+
+  
+    NzBadgeModule,
+    NzProgressModule,
+    NzDropDownModule,
+    NzTimelineModule,
+    NzCalendarModule,
+    NzCheckboxModule,
+    
 ]
 
 @NgModule({
@@ -59,14 +77,17 @@ const antdModule = [
         SharedModule,
         ReactiveFormsModule,
         PagesRoutingModule,
+        FormsModule,
         ...antdModule
     ],
     declarations: [
         ProfileComponent,
         SettingComponent,
-    ],
-    providers: [
+        ChatComponent
     ]
+    // ,
+    // providers: [
+    // ]
 })
 
 export class PagesModule {}

@@ -4,10 +4,8 @@ export const CommonLayout_ROUTES: Routes = [
   {
     path: 'dashboard',
     loadChildren: () => import('../../dashboard/dashboard.module').then(m => m.DashboardModule),
-  }, {
-    path: 'users',
-    loadChildren: () => import('../../user-list/user-list.module').then(m => m.UserListModule),
   },
+  
   //Pages
   {
     path: 'pages',
@@ -22,6 +20,10 @@ export const CommonLayout_ROUTES: Routes = [
       },
       {
         path: '',
+        loadChildren: () => import('../../pages/pages.module').then(m => m.PagesModule)
+      },
+      {
+        path: 'chat',
         loadChildren: () => import('../../pages/pages.module').then(m => m.PagesModule)
       },
     ]

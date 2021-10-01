@@ -25,21 +25,15 @@ export class UserService {
     await this.supabase.updateUserExperience(experience)
   }
 
-  async listOfUsers() {
-    const {data, error} = await this.supabase.getUserList();
-    if (error) {
-      alert(error.message);
-      return;
-    }
-    return data;
+   listOfUsers() {
+   return this.supabase.getUserList();
   }
 
-  async updateUserStatus(user: User) {
-    const {error} = await this.supabase.updateUserStatus(user);
-    if (error) {
-      alert(error.message);
-      return;
-    }
+  makeUserOnline() {
+    return this.supabase.makeUserOnline()
+  }
+  makeUserOffline() {
+    return this.supabase.makeUserOffline()
   }
 
 }

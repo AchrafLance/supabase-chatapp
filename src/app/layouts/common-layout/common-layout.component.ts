@@ -4,6 +4,7 @@ import { Observable } from "rxjs";
 import { distinctUntilChanged, filter, map, startWith } from "rxjs/operators";
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
 import { SupabaseService } from 'src/app/shared/services/supabase.service';
+import { UserService } from 'src/app/shared/services/user.service';
 import { IBreadcrumb } from "../../shared/interfaces/breadcrumb.type";
 import { ThemeConstantService } from '../../shared/services/theme-constant.service';
 
@@ -21,7 +22,13 @@ export class CommonLayoutComponent  {
     isExpand: boolean;
     selectedHeaderColor: string;
 
-    constructor(private authSerivce: AuthenticationService, private supabase: SupabaseService, private router: Router,  private activatedRoute: ActivatedRoute, private themeService: ThemeConstantService) {
+    constructor(private authSerivce: AuthenticationService, 
+        private supabase: SupabaseService,
+         private router: Router,
+         private activatedRoute: ActivatedRoute,
+         private themeService: ThemeConstantService, 
+         private userService: UserService) {
+
         this.router.events.pipe(
             filter(event => event instanceof NavigationEnd),
             map(() => {
@@ -55,13 +62,18 @@ export class CommonLayoutComponent  {
         this.getCurrentUser(); 
     }
 
+    
+
     async getCurrentUser(){ // set current user in localstorage after he signed in 
+        await this.userService.makeUserOnline(); 
         const {data, error} = await this.supabase.getCurrentUser(); 
         if(data){
             localStorage.setItem("currentUser", JSON.stringify(data));
             this.authSerivce.currentUserSubject.next(data);      
         }
     }
+
+
 
     private buildBreadCrumb(route: ActivatedRoute, url: string = '', breadcrumbs: IBreadcrumb[] = []): IBreadcrumb[] {
         let label = '', path = '/', display = null;
