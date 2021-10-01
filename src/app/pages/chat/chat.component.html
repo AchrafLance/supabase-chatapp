@@ -12,7 +12,7 @@
                 <nz-list [nzDataSource]="usersList" [nzRenderItem]="item" [nzItemLayout]="'horizontal'">
                     <ng-template #item let-item let-index="index">
                         <a (click)="selectUser(item)">
-                            <nz-list-item class="p-h-25" [ngClass]="{'active': index == chatId}">
+                            <nz-list-item class="p-h-25" [ngClass]="{'active': index == chatIdentifer}">
 
 
                                 <div class="media align-items-center">
@@ -43,7 +43,7 @@
                     <!-- CONVERSATION HEADER -->
                     <div class="conversation-header justify-content-between">
                         <ng-container *ngFor="let item of usersList">
-                            <div class="media align-items-center" *ngIf="chatId == item.fullname">
+                            <div class="media align-items-center" *ngIf="chatIdentifer == item.fullname">
                                 <a [routerLink]="" (click)="closeChatContent()"
                                     class="m-r-20 d-md-none d-block text-dark font-size-18 m-t-5">
                                     <i nz-icon nzType="left-circle" theme="outline"></i>
@@ -88,12 +88,12 @@
                     <div class="conversation-body" #scrollBottom>
                         <ng-container *ngFor="let item of usersList">
 
-                            <div *ngIf="chatId == item.fullname">
-
+                            <div *ngIf="chatIdentifer == item.fullname">
+                                
                                 <div class="msg"
-                                    [ngClass]="{'msg-recipient':message.sender.id == item.id, 'msg-sent': message.sender.id !== item.id}"
+                                    [ngClass]="{'msg-recipient':message.sender.id == item.id, 'msg-sent': message.sender.id != item.id}"
                                     *ngFor="let message of messagesList">
-                                    <div class="m-r-10" *ngIf="message.sender.avatar_url">
+                                    <div class="avatar m-x-10" *ngIf="message.sender.avatar_url">
                                         <nz-avatar *ngIf="message.sender.avatar_url" [nzIcon]="'user'"
                                             [nzSrc]="message.sender.avatar_url"></nz-avatar>
                                     </div>
@@ -111,9 +111,9 @@
                                             </div> -->
                                         </div>
                                     </div>
-                                    <div class="font-weight-semibold font-size-12" *ngIf="message.created_at.length > 1">
+                                    <!-- <div class="font-weight-semibold font-size-12" *ngIf="message.created_at.length > 1">
                                         {{message.created_at}}
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                         </ng-container>

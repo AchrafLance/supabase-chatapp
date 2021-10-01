@@ -24,9 +24,9 @@ export class ChatService extends SupabaseSuperclass{
     }
 
      getChatByContactsId(contacts){
-        this.getSupabase.from(table).select()
-        .or(`contact_1.eq.${contacts[0]}, and(contact_2.eq.${contacts[1]})`)
-        .or(`contact_1.eq.${contacts[1]}, and(contact_2.eq.${contacts[0]})`)
+        return this.getSupabase.from(table).select()
+        .or(`contact_1.eq.${contacts[0]}, contact_1.eq.${contacts[1]})`)
+        .or(`contact_2.eq.${contacts[1]}, contact_2.eq.${contacts[0]})`)
         .single();
     
     }

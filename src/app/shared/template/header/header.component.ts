@@ -58,10 +58,10 @@ export class HeaderComponent{
     }
 
     navigateToPorfil(){
-        this.router.navigate(['/pages/profile'])
+        this.router.navigate(['/profile'])
     }
     navigateToSetting(){
-        this.router.navigate(['/pages/setting'])
+        this.router.navigate(['/setting'])
     }
 
     notificationList = [

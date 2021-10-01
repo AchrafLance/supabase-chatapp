@@ -87,7 +87,7 @@ $chat-list-width: 380px;
 					}
 
 					&.msg-recipient {
-
+						justify-content: flex-start;
 						.bubble {
 
 							.bubble-wrapper {
@@ -104,13 +104,23 @@ $chat-list-width: 380px;
 					
 					&.msg-sent {
                         justify-content: flex-end;
+						display: flex; 
 
 						.bubble {
-
+                             order: 1;
 							.bubble-wrapper {
 								background: $gray-lighter;
 								color: $gray;
 							}
+							
+							img {
+								max-width: 250px;
+								cursor: pointer;
+							}
+							margin: 0 5px;
+						}
+						.avatar{
+							order:2
 						}
 					}
 				}
