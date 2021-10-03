@@ -17,8 +17,8 @@ export class MessageService extends SupabaseSuperclass {
 
     }
 
-    getChatMessages(chatId: number) {
-        return this.getSupabase.from(table).select("id, chat_id, sender(id, fullname, avatar_url), message_content, created_at").match({
+    async getChatMessages(chatId: number) {
+        return await this.getSupabase.from(table).select("id, chat_id, sender(id, fullname, avatar_url), message_content, created_at").match({
             chat_id: chatId
         })
     }

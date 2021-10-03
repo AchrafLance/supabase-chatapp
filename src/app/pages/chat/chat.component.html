@@ -1,4 +1,4 @@
-<div class="container-fluid p-h-0">
+<!-- <div class="container-fluid p-h-0"> -->
     <div class="chat chat-app row">
 
         <div class="chat-list col-md-3">
@@ -7,37 +7,33 @@
                 <i nz-icon nzType="search" theme="outline" class="search-icon p-r-10 font-size-20"></i>
                 <input placeholder="Search...">
             </div>
-            <!-- USERS LIST -->
-            <div class="chat-user-list">
-                <nz-list [nzDataSource]="usersList" [nzRenderItem]="item" [nzItemLayout]="'horizontal'">
-                    <ng-template #item let-item let-index="index">
-                        <a (click)="selectUser(item)">
-                            <nz-list-item class="p-h-25" [ngClass]="{'active': index == chatIdentifer}">
-
-
-                                <div class="media align-items-center">
-                                    <nz-badge *ngIf="item.isOnline" nzStatus="success"></nz-badge>
-                                    <nz-badge *ngIf="!item.isOnline" nzStatus="error"></nz-badge>
-                                    <div>
-                                        <nz-avatar class="shadow" nzIcon="user" [nzSrc]="item.avatar_url"></nz-avatar>
-                                    </div>
-                                    <div class="p-l-15">
-                                        <h5 class="m-b-0">{{item.fullname}}</h5>
-                                        <ng-container *ngFor="let item of item.msg; let last = last">
-                                            <p *ngIf="last" class="msg-overflow m-b-0 text-muted font-size-13">
-                                                {{item.text}}
-                                            </p>
-                                        </ng-container>
+            <!-- Chat LIST -->
+            <div class="chat-user-list" *ngIf="chats.length > 0" >
+                    <div *ngFor="let item of chats, let i=index">
+                            <a (click)="selectChat(item)">
+                                <div class="p-h-25 my-2" [ngClass]="{'active': index == chatIdentifer}">
+                                    <div class="media align-items-center">
+                                        <div>
+                                            <nz-avatar class="shadow" nzIcon="user" [nzSrc]="item.contact.avatar_url"></nz-avatar>
+                                        </div>
+                                        <div class="p-l-15">
+                                            <h5 class="m-b-0">{{item.contact.fullname}}</h5>
+                                            <ng-container>
+                                                <p class="msg-overflow m-b-0 text-muted font-size-13">
+                                                    {{item.latest_message}}
+                                                </p>
+                                            </ng-container>
+                                        </div>
                                     </div>
                                 </div>
-                            </nz-list-item>
-                        </a>
-                    </ng-template>
-                </nz-list>
+                            </a>
+                    </div>
+              
+                <!-- </nz-list> -->
             </div>
         </div>
         <!-- MESSAGES -->
-        <div class="chat-content col-md-8" [ngClass]="{'open': isContentOpen}">
+        <div class="chat-content col-md-9" [ngClass]="{'open': isContentOpen}">
             <div class="conversation">
                 <div class="conversation-wrapper">
                     <!-- CONVERSATION HEADER -->
@@ -150,4 +146,4 @@
             </div>
         </div>
     </div>
-</div>
+<!-- </div> -->

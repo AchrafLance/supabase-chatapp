@@ -36,4 +36,12 @@ export class UserService {
     return this.supabase.makeUserOffline()
   }
 
+ async getUserChats(userId:any){
+    return await this.supabase.getUserChats(userId); 
+  }
+
+  async getUserById(userId:any){
+    return await this.supabase.getUserById(userId); 
+  }
+
 }

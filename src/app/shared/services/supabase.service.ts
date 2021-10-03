@@ -141,6 +141,19 @@ export class SupabaseService {
     })
   }
 
+  getUserChats(userId:any){
+    return this.supabase.from("users_chats").select().match({
+      user_id:userId 
+    })
+
+  }
+
+  getUserById(userId:any){
+    return this.supabase.from("users").select("fullname, avatar_url").match({
+      id: userId
+    }).single();
+  }
+
 }
 
 

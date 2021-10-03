@@ -13,6 +13,8 @@ import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+
 
 import { HeaderComponent } from "./header/header.component";
 import { SearchComponent } from "./search/search.component";
@@ -33,7 +35,8 @@ const antdModule = [
     NzDividerModule,
     NzSwitchModule,
     NzInputModule,
-    NzButtonModule
+    NzButtonModule,
+    NzToolTipModule
 ]
 
 @NgModule({

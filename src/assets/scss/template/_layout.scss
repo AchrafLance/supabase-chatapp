@@ -2,7 +2,7 @@
     
     .page-container {
         min-height: 100vh;
-        // padding-left: $side-nav-width;
+        padding-left: $side-nav-width;
         @include transition(all 0.2s ease); 
 
         @include screen-laptop-only {

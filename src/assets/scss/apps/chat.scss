@@ -9,7 +9,6 @@ $chat-list-width: 380px;
 }
 
 .chat {
-
 	.conversation {
 
 		.conversation-wrapper {
@@ -161,6 +160,7 @@ $chat-list-width: 380px;
 	}
 
 	&.chat-app {
+		height:81vh;
 		border: 1px solid $border-color;
 		padding: 0px;
 		margin: 0px;

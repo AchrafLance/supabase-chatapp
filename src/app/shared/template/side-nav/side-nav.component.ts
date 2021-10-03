@@ -3,6 +3,8 @@ import { ROUTES } from './side-nav-routes.config';
 import { ThemeConstantService } from '../../services/theme-constant.service';
 import { UserService } from '../../services/user.service';
 import { AuthenticationService } from '../../services/authentication.service';
+import { SharedService } from '../../services/shared.service';
+import { User } from '../../interfaces/user.type';
 
 @Component({
     selector: 'app-sidenav',
@@ -18,7 +20,8 @@ export class SideNavComponent{
 
     constructor( private themeService: ThemeConstantService, 
                 private userService: UserService, 
-                private authService: AuthenticationService) {}
+                private authService: AuthenticationService,
+                private sharedService: SharedService) {}
 
     ngOnInit(): void {
         // this.menuItems = ROUTES.filter(menuItem => menuItem);
@@ -42,12 +45,16 @@ export class SideNavComponent{
         }
     }
 
-    closeMobileMenu(): void {
+    closeMobileMenu(user:User): void {
+        this.sharedService.selectedUserSubject.next(user); 
+
         if (window.innerWidth < 992) {
+            console.log(window.innerWidth)
             this.isFolded = false;
             this.isExpand = !this.isExpand;
             this.themeService.toggleExpand(this.isExpand);
             this.themeService.toggleFold(this.isFolded);
         }
     }
+
 }
