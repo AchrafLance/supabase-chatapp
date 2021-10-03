@@ -37,7 +37,6 @@ import { NzCalendarModule } from 'ng-zorro-antd/calendar';
 import { ChatComponent } from './chat/chat.component';
 
 
-
 const antdModule = [
     NzCardModule,
     NzSkeletonModule,

@@ -17,7 +17,7 @@
                                             <nz-avatar class="shadow" nzIcon="user" [nzSrc]="item.contact.avatar_url"></nz-avatar>
                                         </div>
                                         <div class="p-l-15">
-                                            <h5 class="m-b-0">{{item.contact.fullname}}</h5>
+                                            <h5 class="m-b-0">{{item.contact.fullname | fullnameFormat }}</h5>
                                             <ng-container>
                                                 <p class="msg-overflow m-b-0 text-muted font-size-13">
                                                     {{item.latest_message}}
@@ -33,7 +33,12 @@
             </div>
         </div>
         <!-- MESSAGES -->
-        <div class="chat-content col-md-9" [ngClass]="{'open': isContentOpen}">
+        <div *ngIf="!isContentOpen"  class="col-md-9 d-flex justify-content-center align-items-center">
+            <div>
+                <img class="img-fluid w-60 m-auto p-10" alt="" src="assets/images/logo/chat_logo.png">
+            </div>
+        </div>
+        <div *ngIf="isContentOpen"  class="chat-content col-md-9" [ngClass]="{'open': isContentOpen}">
             <div class="conversation">
                 <div class="conversation-wrapper">
                     <!-- CONVERSATION HEADER -->
@@ -48,7 +53,7 @@
                                     <nz-avatar class="shadow" nzIcon="user" [nzSrc]="item.avatar_url"></nz-avatar>
                                 </div>
                                 <div class="p-l-15">
-                                    <h6 class="m-b-0">{{item.fullname}}</h6>
+                                    <h6 class="m-b-0">{{item.fullname | fullnameFormat}}</h6>
                                     <div *ngIf="item.isOnline">
                                         <p class="m-b-0 text-muted font-size-13">
                                             <nz-badge nzStatus="success"></nz-badge>
@@ -73,9 +78,7 @@
                             </a>
                             <nz-dropdown-menu #chatSetting="nzDropdownMenu">
                                 <ul nz-menu>
-                                    <li nz-menu-item>1st menu item</li>
-                                    <li nz-menu-item>2nd menu item</li>
-                                    <li nz-menu-item>3rd menu item</li>
+                                    <li nz-menu-item (click)="closeChatContent()">close</li>
                                 </ul>
                             </nz-dropdown-menu>
                         </div>
@@ -117,7 +120,7 @@
                     
                     <!-- CONVERSATION FOOTER -->
                     <div class="conversation-footer">
-                        <input [(ngModel)]="msg" class="chat-input" type="text" placeholder="Type a message..."
+                        <input #input [(ngModel)]="msg" class="chat-input" type="text" placeholder="Type a message..."
                             (keydown.enter)="sendMsg(msg);$event.preventDefault()">
                         <ul class="list-inline d-flex align-items-center m-b-0">
                             <li class="list-inline-item">

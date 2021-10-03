@@ -8,6 +8,7 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { ThemeConstantService } from './services/theme-constant.service';
 import { SearchPipe } from './pipes/search.pipe';
+import { FullnamePipe } from './pipes/fullname.pipe';
 
 @NgModule({
     exports: [
@@ -17,7 +18,8 @@ import { SearchPipe } from './pipes/search.pipe';
         HttpClientJsonpModule,
         NzIconModule,
         PerfectScrollbarModule,
-        SearchPipe
+        SearchPipe, 
+        FullnamePipe
     ],
     imports: [
         RouterModule,
@@ -27,7 +29,8 @@ import { SearchPipe } from './pipes/search.pipe';
         PerfectScrollbarModule
     ],
     declarations: [
-        SearchPipe
+        SearchPipe,
+        FullnamePipe
     ],
     providers: [
         ThemeConstantService

@@ -16,6 +16,7 @@ import { Chat } from '../../shared/interfaces/chat.type';
 export class ChatComponent implements OnInit, AfterViewChecked {
 
     @ViewChild('scrollBottom', { static: true }) private scrollContainer: ElementRef;
+    @ViewChild('input') msgInput: ElementRef; 
     isContentOpen = false;
     chatIdentifer: string;
     msg: string;
@@ -121,6 +122,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
     selectChat(chat: any) {
         console.log(chat)
+        this.chat = chat;
         this.chatIdentifer = chat.contact.fullname;
         this.isContentOpen = true;
 
@@ -154,6 +156,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
         }
 
         // INSERT NEW MESSAGE
+        console.log("current chat", this.chat);
         let message: ChatMessage = {
             chat_id: this.chat.id,
             sender: this.authService.currentUserValue.id,
@@ -164,7 +167,8 @@ export class ChatComponent implements OnInit, AfterViewChecked {
         const { data, error } = await this.messageService.addNewMessage(message)
         const savedMessage = await this.messageService.getMessageById(data.id) // doing query twice cuz ineed the sender foreign table
         if (savedMessage.data) {
-            this.messagesList.push(savedMessage.data)
+            this.messagesList.push(savedMessage.data);
+            this.msgInput.nativeElement.innerText = ""; 
         }
     }
 

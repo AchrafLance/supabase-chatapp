@@ -1,0 +1,22 @@
+.container{
+    position: relative;
+}
+.dot {
+    position: absolute;
+    height: 13px;
+    width: 13px;
+    right: 0;
+    bottom: 0;
+    border-radius: 50%;
+    display: inline-block;
+    z-index: 1;
+  }
+
+  .dot.red{
+    background-color: rgb(196, 15, 15);
+  }
+
+  .dot.green{
+    background-color: rgb(71, 164, 52);
+
+  }

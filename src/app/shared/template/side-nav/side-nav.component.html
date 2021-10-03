@@ -1,14 +1,15 @@
 <perfect-scrollbar class="side-nav" sideNav>
-    <ul class="ant-menu ant-menu-root ant-menu-inline side-nav-menu" 
-        [ngClass]="{
+    <ul class="ant-menu ant-menu-root ant-menu-inline side-nav-menu" [ngClass]="{
             'ant-menu-dark' : isSideNavDark
-        }"
-    >
-        <li *ngFor="let item of usersList"  class="ant-menu-item">
-            <span (click)="closeMobileMenu(item)">
-                <nz-avatar nz-tooltip [nzTooltipTitle]="item.fullname" class="shadow" nzIcon="user" [nzSrc]="item.avatar_url"></nz-avatar>
-                <span *ngIf="!isFolded" class="mx-1">{{item.fullname}}</span>
+        }">
+        <li *ngFor="let item of usersList" class="ant-menu-item">
+            <span (click)="closeMobileMenu(item)" class="container">
+                <div class="dot green" *ngIf="item.isOnline" nzStatus="success"></div>
+                <div class="dot red" *ngIf="!item.isOnline" nzStatus="error"></div>
+                <nz-avatar nz-tooltip [nzTooltipTitle]="item.fullname | fullnameFormat" class="shadow" nzIcon="user"
+                    [nzSrc]="item.avatar_url"></nz-avatar>
+                <span *ngIf="!isFolded" class="mx-1">{{item.fullname | fullnameFormat}}</span>
             </span>
         </li>
     </ul>
-</perfect-scrollbar>    
+</perfect-scrollbar>
