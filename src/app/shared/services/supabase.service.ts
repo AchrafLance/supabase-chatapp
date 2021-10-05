@@ -154,6 +154,12 @@ export class SupabaseService {
     }).single();
   }
 
+  removeAllSubscriptions(){
+    for(let sub of this.supabase.getSubscriptions()){
+      console.log("removing sub: ", sub)
+      this.supabase.removeSubscription(sub)
+    }
+  }
 }
 
 
