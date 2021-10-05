@@ -6,6 +6,7 @@ import { AuthenticationService } from 'src/app/shared/services/authentication.se
 import { ChatService } from 'src/app/shared/services/chat.service';
 import { MessageService } from 'src/app/shared/services/message.service';
 import { SharedService } from 'src/app/shared/services/shared.service';
+import { SupabaseService } from 'src/app/shared/services/supabase.service';
 import { UserService } from 'src/app/shared/services/user.service';
 import { Chat } from '../../shared/interfaces/chat.type';
 
@@ -35,12 +36,36 @@ export class ChatComponent implements OnInit, AfterViewChecked {
         private userService: UserService,
         private messageService: MessageService,
         private chatService: ChatService,
-        private authService: AuthenticationService) { 
+        private authService: AuthenticationService,
+        private supabaseService: SupabaseService) { 
             this.chatListSubject = new BehaviorSubject<any>([]); 
             this.chatList = this.chatListSubject.asObservable(); 
         }
 
     ngOnInit() {
+
+        this.supabaseService.supabase.from('messages')
+            .on('INSERT', payload => {
+                console.log('Change received!', payload.new);
+                if(payload.new.sender !== this.authService.currentUserValue.id){
+                    this.userService.getUserById(payload.new.sender).then(data => {
+                        payload.new["sender"] = data.data
+                        this.messagesList.push(payload.new)
+                    })
+                }
+            }).subscribe()
+
+            this.supabaseService.supabase.from('users')
+            .on('UPDATE', payload => {
+                let index = null; 
+                index = this.usersList.findIndex( user=> user.id === payload.new.id);
+                console.log("index", index)
+                if(index != null){
+                    this.usersList[index]=payload.new;
+                    console.log("new user list", this.usersList)
+                }
+            }).subscribe()
+
 
         this.chatList.subscribe(data => {
             this.chats = data; 
@@ -168,8 +193,9 @@ export class ChatComponent implements OnInit, AfterViewChecked {
         const savedMessage = await this.messageService.getMessageById(data.id) // doing query twice cuz ineed the sender foreign table
         if (savedMessage.data) {
             this.messagesList.push(savedMessage.data);
-            this.msgInput.nativeElement.innerText = ""; 
+            this.msgInput.nativeElement.value = "";
         }
+
     }
 
     closeChatContent() {

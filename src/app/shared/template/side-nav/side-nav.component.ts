@@ -5,6 +5,7 @@ import { UserService } from '../../services/user.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { SharedService } from '../../services/shared.service';
 import { User } from '../../interfaces/user.type';
+import { SupabaseService } from '../../services/supabase.service';
 
 @Component({
     selector: 'app-sidenav',
@@ -22,7 +23,8 @@ export class SideNavComponent{
     constructor( private themeService: ThemeConstantService, 
                 private userService: UserService, 
                 private authService: AuthenticationService,
-                private sharedService: SharedService) {}
+                private sharedService: SharedService,
+                private supabaseService: SupabaseService) {}
 
     ngOnInit(): void {
         // this.menuItems = ROUTES.filter(menuItem => menuItem);
@@ -33,6 +35,17 @@ export class SideNavComponent{
              console.log("users", this.usersList)
             }
          })
+
+         this.supabaseService.supabase.from('users')
+         .on('UPDATE', payload => {
+             let index = null; 
+             index = this.usersList.findIndex( user=> user.id === payload.new.id);
+             console.log("index", index)
+             if(index != null){
+                 this.usersList[index]=payload.new;
+                 console.log("new user list", this.usersList)
+             }
+         }).subscribe()
 
         this.themeService.isMenuFoldedChanges.subscribe(isFolded => this.isFolded = isFolded);
         this.themeService.isExpandChanges.subscribe(isExpand => this.isExpand = isExpand);

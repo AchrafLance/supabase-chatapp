@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core";
+import { Observable } from "rxjs";
 import { ChatMessage } from "../interfaces/message.type";
 import { SupabaseSuperclass } from "./supabaseSuperClass";
 
@@ -29,7 +30,5 @@ export class MessageService extends SupabaseSuperclass {
         .match({id:messageId})
         .single();
     }
-
-
 
 }

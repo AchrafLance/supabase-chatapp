@@ -8,6 +8,8 @@ $chat-list-width: 380px;
 	height: 100%;
 }
 
+
+
 .chat {
 	.conversation {
 
@@ -258,6 +260,8 @@ $chat-list-width: 380px;
 				}
 			}	
 
+		
+
 			.conversation {
 				height: 100%;
 			}
@@ -291,6 +295,12 @@ $chat-list-width: 380px;
 					} 
 				}
 			}
+		}
+	}
+	
+	@media screen and (max-width : 780px) {
+		.chat-logo{
+			display: none;
 		}
 	}
 }

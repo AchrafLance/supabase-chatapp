@@ -10,7 +10,7 @@ import {User} from '../interfaces/user.type';
 })
 export class SupabaseService {
 
-  private supabase: SupabaseClient;
+  public supabase: SupabaseClient;
 
   constructor(private router: Router) {
     this.supabase = createClient(environment.supaURL, environment.supaKEY);
@@ -149,7 +149,7 @@ export class SupabaseService {
   }
 
   getUserById(userId:any){
-    return this.supabase.from("users").select("fullname, avatar_url").match({
+    return this.supabase.from("users").select("id, fullname, avatar_url").match({
       id: userId
     }).single();
   }
