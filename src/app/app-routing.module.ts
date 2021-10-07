@@ -3,9 +3,6 @@ import { RouterModule, Routes, PreloadAllModules } from '@angular/router';
 
 import { FullLayoutComponent } from "./layouts/full-layout/full-layout.component";
 import { CommonLayoutComponent } from "./layouts/common-layout/common-layout.component";
-
-import { FullLayout_ROUTES } from "./shared/routes/full-layout.routes";
-import { CommonLayout_ROUTES } from "./shared/routes/common-layout.routes";
 import { AuthGuard } from './authentication/authentication.guard';
 
 const appRoutes: Routes = [
@@ -18,12 +15,24 @@ const appRoutes: Routes = [
         path: '', 
         component: CommonLayoutComponent,
         canActivate:[AuthGuard],
-        children: CommonLayout_ROUTES 
+        children: [
+            {
+              path: '',
+              loadChildren: () => import('./pages/pages.module').then(m => m.PagesModule)
+            },
+            
+          ]
+           
     },
     { 
         path: '', 
         component: FullLayoutComponent, 
-        children: FullLayout_ROUTES
+        children: [
+            {
+                path: 'authentication',
+                loadChildren: () => import('./authentication/authentication.module').then(m => m.AuthenticationModule)
+            }
+        ]
     }
 ];
 
