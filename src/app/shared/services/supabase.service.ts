@@ -43,7 +43,7 @@ export class SupabaseService {
 
   signout() {
     this.supabase.auth.signOut();
-    this.router.navigate(['/authentication/login']);
+    this.router.navigate(['/login']);
   }
 
 

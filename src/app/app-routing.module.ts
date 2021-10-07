@@ -29,11 +29,14 @@ const appRoutes: Routes = [
         component: FullLayoutComponent, 
         children: [
             {
-                path: 'authentication',
+                path: '',
                 loadChildren: () => import('./authentication/authentication.module').then(m => m.AuthenticationModule)
             }
         ]
-    }
+    },
+    
+    {path: '**', redirectTo: '/not-found'}
+
 ];
 
 @NgModule({
