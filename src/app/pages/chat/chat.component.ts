@@ -1,14 +1,14 @@
 import { Component, AfterViewChecked, ElementRef, ViewChild, OnInit } from '@angular/core'
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { ChatMessage } from 'src/app/shared/interfaces/message.type';
-import { User } from 'src/app/shared/interfaces/user.type';
+import { ChatMessage } from 'src/app/shared/interfaces/message';
+import { User } from 'src/app/shared/interfaces/user';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
 import { ChatService } from 'src/app/shared/services/chat.service';
 import { MessageService } from 'src/app/shared/services/message.service';
 import { SharedService } from 'src/app/shared/services/shared.service';
 import { SupabaseService } from 'src/app/shared/services/supabase.service';
 import { UserService } from 'src/app/shared/services/user.service';
-import { Chat } from '../../shared/interfaces/chat.type';
+import { Chat } from '../../shared/interfaces/chat';
 
 @Component({
     templateUrl: './chat.component.html'

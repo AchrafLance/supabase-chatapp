@@ -1,12 +1,14 @@
 import { Component } from '@angular/core'
 import { FormBuilder, FormGroup,  Validators } from '@angular/forms';
+import { AuthenticationService } from 'src/app/shared/services/authentication.service';
+import { SupabaseService } from 'src/app/shared/services/supabase.service';
 
 
 @Component({
-    templateUrl: './login-2.component.html'
+    templateUrl: './login.component.html'
 })
 
-export class Login2Component {
+export class LoginComponent {
     loginForm: FormGroup;
 
     submitForm(): void {
@@ -16,7 +18,7 @@ export class Login2Component {
         }
     }
 
-    constructor(private fb: FormBuilder) {
+    constructor(private fb: FormBuilder, private authService:AuthenticationService) {
     }
 
     ngOnInit(): void {
@@ -25,4 +27,8 @@ export class Login2Component {
             password: [ null, [ Validators.required ] ]
         });
     }
-}    
+
+    signInWithGoogle() {
+        this.authService.loginWithGoogle();
+    }
+}

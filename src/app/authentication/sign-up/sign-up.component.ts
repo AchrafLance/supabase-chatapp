@@ -3,10 +3,10 @@ import { FormBuilder, FormControl, FormGroup,  Validators } from '@angular/forms
 
 
 @Component({
-    templateUrl: './sign-up-1.component.html'
+    templateUrl: './sign-up.component.html'
 })
 
-export class SignUp1Component {
+export class SignUpComponent {
 
     signUpForm: FormGroup;
 

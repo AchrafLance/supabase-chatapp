@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {environment} from 'src/environments/environment';
 import {createClient, SupabaseClient} from '@supabase/supabase-js';
 import {Router} from '@angular/router';
-import {User} from '../interfaces/user.type';
+import {User} from '../interfaces/user';
 
 
 @Injectable({

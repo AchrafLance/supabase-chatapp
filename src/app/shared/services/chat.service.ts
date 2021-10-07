@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Chat } from "../interfaces/chat.type";
+import { Chat } from "../interfaces/chat";
 import { SupabaseSuperclass } from "./supabaseSuperClass";
 
 const table = "chats";

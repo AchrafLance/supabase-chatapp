@@ -9,6 +9,8 @@ import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { ThemeConstantService } from './services/theme-constant.service';
 import { SearchPipe } from './pipes/search.pipe';
 import { FullnamePipe } from './pipes/fullname.pipe';
+import { NzSpinModule } from 'ng-zorro-antd/spin';
+
 
 @NgModule({
     exports: [
@@ -26,7 +28,8 @@ import { FullnamePipe } from './pipes/fullname.pipe';
         CommonModule,
         NzIconModule,
         NzToolTipModule,
-        PerfectScrollbarModule
+        PerfectScrollbarModule,
+        NzSpinModule
     ],
     declarations: [
         SearchPipe,

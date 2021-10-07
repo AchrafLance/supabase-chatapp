@@ -4,7 +4,7 @@ import { ThemeConstantService } from '../../services/theme-constant.service';
 import { UserService } from '../../services/user.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { SharedService } from '../../services/shared.service';
-import { User } from '../../interfaces/user.type';
+import { User } from '../../interfaces/user';
 import { SupabaseService } from '../../services/supabase.service';
 
 @Component({

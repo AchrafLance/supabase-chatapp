@@ -1,4 +1,4 @@
-import { SideNavInterface } from '../../interfaces/side-nav.type';
+import { SideNavInterface } from '../../interfaces/side-nav';
 export const ROUTES: SideNavInterface[] = [
 
    
