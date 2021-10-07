@@ -38,16 +38,12 @@ export class SupabaseService {
         provider: 'google'
       },
 
-      // {
-      //     redirectTo: 'http://localhost:4200/dashboard/home'
-      // }
-
     );
   }
 
   signout() {
     this.supabase.auth.signOut();
-    this.router.navigate(['/authentication/login-3']);
+    this.router.navigate(['/authentication/login']);
   }
 
 

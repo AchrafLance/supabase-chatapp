@@ -45,7 +45,6 @@ export class AuthenticationService {
 
     async logout() {
         await this.userService.makeUserOffline()
-        localStorage.removeItem('currentUser');
         this.currentUserSubject.next(null);
         this.supabase.removeAllSubscriptions();
         this.supabase.signout();       

@@ -60,7 +60,6 @@ export class CommonLayoutComponent  {
         await this.userService.makeUserOnline(); 
         const {data, error} = await this.supabase.getCurrentUser(); 
         if(data){
-            localStorage.setItem("currentUser", JSON.stringify(data));
             this.authSerivce.currentUserSubject.next(data);      
         }
     }

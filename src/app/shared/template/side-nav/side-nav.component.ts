@@ -15,7 +15,7 @@ import { SupabaseService } from '../../services/supabase.service';
 
 export class SideNavComponent{
 
-    public usersList: any[]
+    public usersList: User[]
     isFolded : boolean;
     isSideNavDark : boolean;
     isExpand : boolean;
@@ -27,15 +27,15 @@ export class SideNavComponent{
                 private supabaseService: SupabaseService) {}
 
     ngOnInit(): void {
-        // this.menuItems = ROUTES.filter(menuItem => menuItem);
 
-        this.authService.currentUser.subscribe(data => {
+
+        this.authService.currentUser.subscribe((data:User) => {
             if(data){
-             this.getUsers();
-             console.log("users", this.usersList)
+              this.getUsers();
             }
          })
 
+        // listen to users table 
          this.supabaseService.supabase.from('users')
          .on('UPDATE', payload => {
              let index = null; 
@@ -53,7 +53,7 @@ export class SideNavComponent{
     }
 
     async getUsers() {
-        const { data, error } = await this.userService.listOfUsers()
+        const { data } = await this.userService.listOfUsers()
         if (data) {
             this.usersList = data.filter(user => user.id != this.authService.currentUserValue.id);
         }

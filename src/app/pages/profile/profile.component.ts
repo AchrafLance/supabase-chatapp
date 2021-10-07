@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core'
+import { User } from 'src/app/shared/interfaces/user';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
 
 @Component({
@@ -6,14 +7,16 @@ import { AuthenticationService } from 'src/app/shared/services/authentication.se
 })
 
 export class ProfileComponent implements OnInit {
-    currentUser; 
+    currentUser:User; 
     constructor(private authService: AuthenticationService){
 
     }
 
     ngOnInit(){
-        this.authService.currentUser.subscribe(data => {
-            this.currentUser = data; 
+        this.authService.currentUser.subscribe((data:User) => {
+            if(data.fullname){
+                this.currentUser = data; 
+            }
         })
 
     }

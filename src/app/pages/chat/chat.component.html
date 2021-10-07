@@ -88,7 +88,6 @@
                         <ng-container *ngFor="let item of usersList">
 
                             <div *ngIf="chatIdentifer == item.fullname">
-                                
                                 <div class="msg"
                                     [ngClass]="{'msg-recipient':message.sender.id == item.id, 'msg-sent': message.sender.id != item.id}"
                                     *ngFor="let message of messagesList">
