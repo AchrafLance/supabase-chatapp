@@ -15,37 +15,37 @@ import { SupabaseService } from '../../services/supabase.service';
 
 export class SideNavComponent{
 
-    public usersList: User[]
-    isFolded : boolean;
-    isSideNavDark : boolean;
-    isExpand : boolean;
+    public usersList: User[];
+    isFolded: boolean;
+    isSideNavDark: boolean;
+    isExpand: boolean;
 
-    constructor( private themeService: ThemeConstantService, 
-                private userService: UserService, 
-                private authService: AuthenticationService,
-                private sharedService: SharedService,
-                private supabaseService: SupabaseService) {}
+    constructor( private themeService: ThemeConstantService,
+                 private userService: UserService,
+                 private authService: AuthenticationService,
+                 private sharedService: SharedService,
+                 private supabaseService: SupabaseService) {}
 
     ngOnInit(): void {
 
 
-        this.authService.currentUser.subscribe((data:User) => {
-            if(data){
+        this.authService.currentUser.subscribe((data: User) => {
+            if (data){
               this.getUsers();
             }
-         })
+         });
 
-        // listen to users table 
-         this.supabaseService.supabase.from('users')
+        // listen to users table
+        this.supabaseService.supabase.from('users')
          .on('UPDATE', payload => {
-             let index = null; 
-             index = this.usersList.findIndex( user=> user.id === payload.new.id);
-             console.log("index", index)
-             if(index != null){
-                 this.usersList[index]=payload.new;
-                 console.log("new user list", this.usersList)
+             let index = null;
+             index = this.usersList.findIndex( user => user.id === payload.new.id);
+             console.log('index', index);
+             if (index != null){
+                 this.usersList[index] = payload.new;
+                 console.log('new user list', this.usersList);
              }
-         }).subscribe()
+         }).subscribe();
 
         this.themeService.isMenuFoldedChanges.subscribe(isFolded => this.isFolded = isFolded);
         this.themeService.isExpandChanges.subscribe(isExpand => this.isExpand = isExpand);
@@ -53,17 +53,17 @@ export class SideNavComponent{
     }
 
     async getUsers() {
-        const { data } = await this.userService.listOfUsers()
+        const { data } = await this.userService.listOfUsers();
         if (data) {
             this.usersList = data.filter(user => user.id != this.authService.currentUserValue.id);
         }
     }
 
-    closeMobileMenu(user:User): void {
-        this.sharedService.selectedUserSubject.next(user); 
+    closeMobileMenu(user: User): void {
+        this.sharedService.selectedUserSubject.next(user);
 
         if (window.innerWidth < 992) {
-            console.log(window.innerWidth)
+            console.log(window.innerWidth);
             this.isFolded = false;
             this.isExpand = !this.isExpand;
             this.themeService.toggleExpand(this.isExpand);

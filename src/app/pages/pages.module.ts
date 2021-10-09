@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from "@angular/common";
+import { CommonModule } from '@angular/common';
 import { SharedModule } from '../shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PagesRoutingModule } from './pages-routing.module';
@@ -58,17 +58,17 @@ const antdModule = [
     NzToolTipModule,
     NzModalModule,
     NzMessageModule,
-    NzInputModule, 
+    NzInputModule,
 
-  
+
     NzBadgeModule,
     NzProgressModule,
     NzDropDownModule,
     NzTimelineModule,
     NzCalendarModule,
     NzCheckboxModule,
-    
-]
+
+];
 
 @NgModule({
     imports: [

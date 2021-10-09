@@ -94,26 +94,26 @@ export class SupabaseService {
       });
   }
 
-  updateUserEducation(education){
+  updateUserEducation(updatedEducation){
     return this.supabase
     .from('users')
     .update({
-      education: education
-    })
-    .match({
-      id:this.user.id
-    })
-  }
-
-  updateUserExperience(experience){
-    return this.supabase
-    .from('users')
-    .update({
-      experience: experience
+      education: updatedEducation
     })
     .match({
       id: this.user.id
+    });
+  }
+
+  updateUserExperience(updatedExperience){
+    return this.supabase
+    .from('users')
+    .update({
+      experience: updatedExperience
     })
+    .match({
+      id: this.user.id
+    });
   }
   getUserList() {
     return this.supabase
@@ -122,47 +122,47 @@ export class SupabaseService {
   }
 
   makeUserOnline(){
-    return this.supabase.from("users").update({
+    return this.supabase.from('users').update({
       isOnline: true
     }).match({
       id: this.user.id
-    })
+    });
   }
 
   makeUserOffline(){
-    return this.supabase.from("users").update({
+    return this.supabase.from('users').update({
       isOnline: false
     }).match({
       id: this.user.id
-    })
+    });
   }
 
-  //(id, contact_1, contact_2, latest_message)
-  getUserChats(userId:any){
-    return this.supabase.from("users_chats").select("id, user_id, chat_id(id, latest_message)").match({
-      user_id:userId 
-    })
+  // (id, contact_1, contact_2, latest_message)
+  getUserChats(userId: any){
+    return this.supabase.from('users_chats').select('id, user_id, chat_id(id, latest_message)').match({
+      user_id: userId
+    });
   }
 
-  getDestinaionContact(chatId:number, originContactId:string){
-    return this.supabase.from("users_chats").select('user_id(id, fullname, avatar_url)')
+  getDestinaionContact(chatId: number, originContactId: string){
+    return this.supabase.from('users_chats').select('user_id(id, fullname, avatar_url)')
                          .match({
                            chat_id: chatId,
                          })
-                         .not("user_id","eq",originContactId)
-                         .single()
+                         .not('user_id', 'eq', originContactId)
+                         .single();
   }
 
-  getUserById(userId:any){
-    return this.supabase.from("users").select("id, fullname, avatar_url").match({
+  getUserById(userId: any){
+    return this.supabase.from('users').select('id, fullname, avatar_url').match({
       id: userId
     }).single();
   }
 
   removeAllSubscriptions(){
-    for(let sub of this.supabase.getSubscriptions()){
-      console.log("removing sub: ", sub)
-      this.supabase.removeSubscription(sub)
+    for (const sub of this.supabase.getSubscriptions()){
+      console.log('removing sub: ', sub);
+      this.supabase.removeSubscription(sub);
     }
   }
 }

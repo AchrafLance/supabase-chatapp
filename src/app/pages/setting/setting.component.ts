@@ -8,18 +8,18 @@ import { AuthenticationService } from 'src/app/shared/services/authentication.se
 import { UserService } from 'src/app/shared/services/user.service';
 
 @Component({
-    templateUrl: './setting.component.html', 
+    templateUrl: './setting.component.html',
     styleUrls: ['./setting.component.css'],
 
 })
 
 export class SettingComponent implements OnInit {
-    currentUser:any;
+    currentUser: any;
 
-    basicInfoForm: FormGroup; 
+    basicInfoForm: FormGroup;
     educationForm!: FormGroup;
     listOfEducationControl: Array<{ id: number; universite: string, graduationDate: string }> = [];
-    experienceForm: FormGroup; 
+    experienceForm: FormGroup;
     listOfExperienceControl: Array<{ id: number; entreprise: string, graduationDate: string }> = [];
 
 
@@ -86,70 +86,70 @@ export class SettingComponent implements OnInit {
 
     notificationConfigList = [
         {
-            title: "Everyone can look me up",
-            desc: "Allow people found on your public.",
-            icon: "user",
-            color: "ant-avatar-blue",
+            title: 'Everyone can look me up',
+            desc: 'Allow people found on your public.',
+            icon: 'user',
+            color: 'ant-avatar-blue',
             status: true
         },
         {
-            title: "Everyone can contact me",
-            desc: "Allow any peole to contact.",
-            icon: "mobile",
-            color: "ant-avatar-cyan",
+            title: 'Everyone can contact me',
+            desc: 'Allow any peole to contact.',
+            icon: 'mobile',
+            color: 'ant-avatar-cyan',
             status: true
         },
         {
-            title: "Show my location",
-            desc: "Turning on Location lets you explore what's around you.",
-            icon: "environment",
-            color: "ant-avatar-gold",
+            title: 'Show my location',
+            desc: 'Turning on Location lets you explore what\'s around you.',
+            icon: 'environment',
+            color: 'ant-avatar-gold',
             status: false
         },
         {
-            title: "Email Notifications",
-            desc: "Receive daily email notifications.",
-            icon: "mail",
-            color: "ant-avatar-purple",
+            title: 'Email Notifications',
+            desc: 'Receive daily email notifications.',
+            icon: 'mail',
+            color: 'ant-avatar-purple',
             status: true
         },
         {
-            title: "Unknow Source ",
-            desc: "Allow all downloads from unknow source.",
-            icon: "question",
-            color: "ant-avatar-red",
+            title: 'Unknow Source ',
+            desc: 'Allow all downloads from unknow source.',
+            icon: 'question',
+            color: 'ant-avatar-red',
             status: false
         },
         {
-            title: "Data Synchronization",
-            desc: "Allow data synchronize with cloud server",
-            icon: "swap",
-            color: "ant-avatar-green",
+            title: 'Data Synchronization',
+            desc: 'Allow data synchronize with cloud server',
+            icon: 'swap',
+            color: 'ant-avatar-green',
             status: true
         },
         {
-            title: "Groups Invitation",
-            desc: "Allow any groups invitation",
-            icon: "usergroup-add",
-            color: "ant-avatar-orange",
+            title: 'Groups Invitation',
+            desc: 'Allow any groups invitation',
+            icon: 'usergroup-add',
+            color: 'ant-avatar-orange',
             status: true
         },
-    ]
+    ];
 
-    constructor(private fb: FormBuilder, 
+    constructor(private fb: FormBuilder,
                 private modalService: NzModalService,
                 private message: NzMessageService,
-                private supabase: SupabaseService, 
+                private supabase: SupabaseService,
                 private authService: AuthenticationService,
                 private userService: UserService) {
     }
 
     ngOnInit(): void {
         this.authService.currentUser.subscribe(data => {
-            this.currentUser = data
+            this.currentUser = data;
 
-    
-            //BASIC INFOS FORM 
+
+            // BASIC INFOS FORM
             this.basicInfoForm = this.fb.group({
                 fullname: [this.currentUser.fullname, [Validators.required]],
                 nickname: [this.currentUser.nickname, [Validators.required]],
@@ -158,21 +158,21 @@ export class SettingComponent implements OnInit {
                 phone: [this.currentUser.phone, [Validators.required]],
                 adresse: [this.currentUser.adresse, [Validators.required]],
                 birth_date: [this.currentUser.birth_date, [Validators.required]],
-            })
+            });
 
-            //EDUCATION INFOS FORM 
+            // EDUCATION INFOS FORM
 
             this.educationForm = this.fb.group({});
             this.listOfEducationControl = [];
 
             if (this.currentUser.education) {
-                let length = this.currentUser.education.length;
-                console.log(length)
+                const length = this.currentUser.education.length;
+                console.log(length);
                 for (let i = 0; i < length; i++) {
-                    this.listOfEducationControl.push({  // initialise the array of form controls 
+                    this.listOfEducationControl.push({  // initialise the array of form controls
                         id: i, universite: `universite${i}`,
                         graduationDate: `graduationDate${i}`
-                    })
+                    });
                     this.educationForm.addControl( // affect controls to the form with their initial value
                         this.listOfEducationControl[i].universite,
                         new FormControl(this.currentUser.education[i].universite, Validators.required)
@@ -184,18 +184,18 @@ export class SettingComponent implements OnInit {
                 }
             }
 
-            //EXPERIENCE INFOS FORM 
+            // EXPERIENCE INFOS FORM
 
             this.experienceForm = this.fb.group({});
             this.listOfExperienceControl = [];
 
             if (this.currentUser.experience) {
-                let length = this.currentUser.experience.length;
+                const length = this.currentUser.experience.length;
                 for (let i = 0; i < length; i++) {
-                    this.listOfExperienceControl.push({  // initialise the array of form controls 
+                    this.listOfExperienceControl.push({  // initialise the array of form controls
                         id: i, entreprise: `entreprise${i}`,
                         graduationDate: `graduationDate${i}`
-                    })
+                    });
                     this.experienceForm.addControl( // affect controls to the form with their initial value
                         this.listOfExperienceControl[i].entreprise,
                         new FormControl(this.currentUser.experience[i].entreprise, Validators.required)
@@ -209,7 +209,7 @@ export class SettingComponent implements OnInit {
 
 
 
-        })
+        });
     }
 
 
@@ -218,20 +218,20 @@ export class SettingComponent implements OnInit {
     //////////////////////////////////////////////////////////////////////////////////
 
     submitBasicInfos() {
-        let basicInfos = {
-            fullname: this.basicInfoForm.get("fullname").value,
-            nickname: this.basicInfoForm.get("nickname").value,
-            profile: this.basicInfoForm.get("profile").value,
-            bio: this.basicInfoForm.get("bio").value,
-            phone: this.basicInfoForm.get("phone").value,
-            adresse: this.basicInfoForm.get("adresse").value,
-            birth_date: this.basicInfoForm.get("birth_date").value,
-        }
+        const basicInfos = {
+            fullname: this.basicInfoForm.get('fullname').value,
+            nickname: this.basicInfoForm.get('nickname').value,
+            profile: this.basicInfoForm.get('profile').value,
+            bio: this.basicInfoForm.get('bio').value,
+            phone: this.basicInfoForm.get('phone').value,
+            adresse: this.basicInfoForm.get('adresse').value,
+            birth_date: this.basicInfoForm.get('birth_date').value,
+        };
         this.userService.updateUserBasicInfos(basicInfos).then(data => {
-            let updatedUser = Object.assign(this.currentUser, basicInfos);
+            const updatedUser = Object.assign(this.currentUser, basicInfos);
             this.authService.currentUserSubject.next(updatedUser);
 
-            alert("data updated");
+            alert('data updated');
 
         });
     }
@@ -269,8 +269,8 @@ export class SettingComponent implements OnInit {
 
     const control = {
       id,
-      universite: `universite${id}`, 
-      graduationDate:`graduationDate${id}`
+      universite: `universite${id}`,
+      graduationDate: `graduationDate${id}`
 
     };
     const index = this.listOfEducationControl.push(control);
@@ -293,34 +293,34 @@ export class SettingComponent implements OnInit {
       this.educationForm.removeControl(i.universite);
       this.educationForm.removeControl(i.graduationDate);
     }
-    console.log(this.listOfEducationControl)
-    console.log(this.educationForm.controls)
+    console.log(this.listOfEducationControl);
+    console.log(this.educationForm.controls);
   }
 
   submitEducationForm(){
-      let education:Array<{universite: string, graduationDate: string }> = []; 
-      for(let i=0; i<this.listOfEducationControl.length; i++){
-        let field = {
+      const education: Array<{universite: string, graduationDate: string }> = [];
+      for (let i = 0; i < this.listOfEducationControl.length; i++){
+        const field = {
             universite: this.educationForm.get(`universite${i}`).value,
             graduationDate: this.educationForm.get(`graduationDate${i}`).value
-        }
-        education.push(field); 
-        console.log(education)
+        };
+        education.push(field);
+        console.log(education);
       }
-      this.userService.updateUserEducation(education).then(data =>{
-        this.currentUser.education = education; 
-        this.authService.currentUserSubject.next(this.currentUser); 
-          alert("education updated")
-      }).catch(error=>{
-          alert(error.message)
-      }); 
+      this.userService.updateUserEducation(education).then(data => {
+        this.currentUser.education = education;
+        this.authService.currentUserSubject.next(this.currentUser);
+        alert('education updated');
+      }).catch(error => {
+          alert(error.message);
+      });
   }
 
   //////////////////////////////////////////////////////////////////////////////////
   // END: EDUCTAION FORM METHODS
   //////////////////////////////////////////////////////////////////////////////////
 
-  
+
   //////////////////////////////////////////////////////////////////////////////////
   // START: EXPERIENCE FORM METHODS
   //////////////////////////////////////////////////////////////////////////////////
@@ -333,8 +333,8 @@ export class SettingComponent implements OnInit {
 
     const control = {
       id,
-      entreprise: `entreprise${id}`, 
-      graduationDate:`graduationDate${id}`
+      entreprise: `entreprise${id}`,
+      graduationDate: `graduationDate${id}`
 
     };
     const index = this.listOfExperienceControl.push(control);
@@ -361,25 +361,25 @@ export class SettingComponent implements OnInit {
 
 
   submitExperienceForm(){
-    let experience:Array<{entreprise: string, graduationDate: string }> = []; 
-    for(let i=0; i<this.listOfExperienceControl.length; i++){
-      let field = {
+    const experience: Array<{entreprise: string, graduationDate: string }> = [];
+    for (let i = 0; i < this.listOfExperienceControl.length; i++){
+      const field = {
           entreprise: this.experienceForm.get(`entreprise${i}`).value,
           graduationDate: this.experienceForm.get(`graduationDate${i}`).value
-      }
-      experience.push(field); 
+      };
+      experience.push(field);
     }
-    this.userService.updateUserExperience(experience).then(data =>{
-      this.currentUser.experience = experience; 
-      this.authService.currentUserSubject.next(this.currentUser); 
-        alert("exprience updated")
-    }).catch(error=>{
-        alert(error.message)
-    }); 
+    this.userService.updateUserExperience(experience).then(data => {
+      this.currentUser.experience = experience;
+      this.authService.currentUserSubject.next(this.currentUser);
+      alert('exprience updated');
+    }).catch(error => {
+        alert(error.message);
+    });
 
   }
 
   //////////////////////////////////////////////////////////////////////////////////
   // END: EXPERIENCE FORM METHODS
   //////////////////////////////////////////////////////////////////////////////////
-}    
+}

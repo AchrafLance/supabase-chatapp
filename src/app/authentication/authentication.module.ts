@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from "@angular/common";
+import { CommonModule } from '@angular/common';
 import { SharedModule } from '../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthenticationRoutingModule } from './authentication-routing.module';
@@ -14,13 +14,13 @@ import { SignUpComponent } from './sign-up/sign-up.component';
 import { PageNotFoundErrorComponent } from './page-not-found-error/page-not-found-error.component';
 import { SiteDownErrorComponent } from './site-down-error/site-down-error.component';
 
-const antdModule= [
+const antdModule = [
     NzFormModule,
     NzInputModule,
     NzButtonModule,
     NzCardModule,
     NzCheckboxModule
-]
+];
 
 @NgModule({
     imports: [

@@ -19,10 +19,10 @@ export class UserService {
   }
 
   async updateUserEducation(education){
-   await this.supabase.updateUserEducation(education)
+   await this.supabase.updateUserEducation(education);
   }
   async updateUserExperience(experience){
-    await this.supabase.updateUserExperience(experience)
+    await this.supabase.updateUserExperience(experience);
   }
 
    listOfUsers() {
@@ -30,18 +30,18 @@ export class UserService {
   }
 
   makeUserOnline() {
-    return this.supabase.makeUserOnline()
+    return this.supabase.makeUserOnline();
   }
   makeUserOffline() {
-    return this.supabase.makeUserOffline()
+    return this.supabase.makeUserOffline();
   }
 
- async getUserChats(userId:any){
-    return await this.supabase.getUserChats(userId); 
+ async getUserChats(userId: any){
+    return await this.supabase.getUserChats(userId);
   }
 
-  async getUserById(userId:any){
-    return await this.supabase.getUserById(userId); 
+  async getUserById(userId: any){
+    return await this.supabase.getUserById(userId);
   }
 
 }

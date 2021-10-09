@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes, PreloadAllModules } from '@angular/router';
 
-import { FullLayoutComponent } from "./layouts/full-layout/full-layout.component";
-import { CommonLayoutComponent } from "./layouts/common-layout/common-layout.component";
+import { FullLayoutComponent } from './layouts/full-layout/full-layout.component';
+import { CommonLayoutComponent } from './layouts/common-layout/common-layout.component';
 import { AuthGuard } from './authentication/authentication.guard';
 
 const appRoutes: Routes = [
@@ -11,22 +11,22 @@ const appRoutes: Routes = [
         redirectTo: '/chat',
         pathMatch: 'full',
     },
-    { 
-        path: '', 
+    {
+        path: '',
         component: CommonLayoutComponent,
-        canActivate:[AuthGuard],
+        canActivate: [AuthGuard],
         children: [
             {
               path: '',
               loadChildren: () => import('./pages/pages.module').then(m => m.PagesModule)
             },
-            
+
           ]
-           
+
     },
-    { 
-        path: '', 
-        component: FullLayoutComponent, 
+    {
+        path: '',
+        component: FullLayoutComponent,
         children: [
             {
                 path: '',
@@ -34,17 +34,17 @@ const appRoutes: Routes = [
             }
         ]
     },
-    
+
     {path: '**', redirectTo: '/not-found'}
 
 ];
 
 @NgModule({
     imports: [
-        RouterModule.forRoot(appRoutes, { 
+        RouterModule.forRoot(appRoutes, {
             preloadingStrategy: PreloadAllModules,
             anchorScrolling: 'enabled',
-            scrollPositionRestoration: 'enabled' 
+            scrollPositionRestoration: 'enabled'
         })
     ],
     exports: [

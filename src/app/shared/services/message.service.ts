@@ -1,33 +1,33 @@
-import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
-import { ChatMessage } from "../interfaces/chat-message";
-import { SupabaseSuperclass } from "./supabaseSuperClass";
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { ChatMessage } from '../interfaces/chat-message';
+import { SupabaseSuperclass } from './supabaseSuperClass';
 
-const table = "messages"; 
+const table = 'messages';
 
 @Injectable({
-    providedIn: "root"
+    providedIn: 'root'
 })
 export class MessageService extends SupabaseSuperclass {
     constructor() {
-        super()
+        super();
     }
 
     addNewMessage(message: ChatMessage) {
-        return this.getSupabase.from(table).insert(message).single()
+        return this.getSupabase.from(table).insert(message).single();
 
     }
 
     async getChatMessages(chatId: number) {
-        return await this.getSupabase.from(table).select("id, chat_id, sender(id, fullname, avatar_url), message_content, created_at").match({
+        return await this.getSupabase.from(table).select('id, chat_id, sender(id, fullname, avatar_url), message_content, created_at').match({
             chat_id: chatId
-        })
+        });
     }
 
-    getMessageById(messageId:number){
+    getMessageById(messageId: number){
         return this.getSupabase.from(table)
-        .select("id, chat_id, sender(fullname, avatar_url), message_content, created_at")
-        .match({id:messageId})
+        .select('id, chat_id, sender(fullname, avatar_url), message_content, created_at')
+        .match({id: messageId})
         .single();
     }
 

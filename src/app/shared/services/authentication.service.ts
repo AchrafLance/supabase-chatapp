@@ -9,14 +9,14 @@ import { UserService } from './user.service';
 const USER_AUTH_API_URL = '/api-url';
 
 @Injectable({
-    providedIn:"root"
+    providedIn: 'root'
 })
 export class AuthenticationService {
     public currentUserSubject: BehaviorSubject<any>;
     public currentUser: Observable<any>;
 
-    constructor(private http: HttpClient, 
-                private supabase:SupabaseService,
+    constructor(private http: HttpClient,
+                private supabase: SupabaseService,
                 private userService: UserService) {
         this.currentUserSubject = new BehaviorSubject<any>(this.supabase.user);
         this.currentUser = this.currentUserSubject.asObservable();
@@ -38,14 +38,14 @@ export class AuthenticationService {
     }
 
     async loginWithGoogle(){
-     await this.supabase.signInWithGoogle();   
+     await this.supabase.signInWithGoogle();
 
     }
 
     async logout() {
-        await this.userService.makeUserOffline()
+        await this.userService.makeUserOffline();
         this.currentUserSubject.next(null);
         this.supabase.removeAllSubscriptions();
-        this.supabase.signout();       
+        this.supabase.signout();
     }
 }

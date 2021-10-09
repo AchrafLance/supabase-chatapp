@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
 
 export class SearchComponent {
 
-    search : any
+    search: any;
 
     files = [
         {
@@ -34,7 +34,7 @@ export class SearchComponent {
             icon: 'file-pdf',
             color: 'ant-avatar-' + 'red'
         }
-    ]
+    ];
 
     members = [
         {
@@ -52,7 +52,7 @@ export class SearchComponent {
             desc: 'Data Analyst',
             img: 'assets/images/avatars/thumb-3.jpg',
         }
-    ]
+    ];
 
     feeds = [
         {
@@ -60,7 +60,7 @@ export class SearchComponent {
             desc: '25 Nov 2018',
             img: 'assets/images/others/img-1.jpg',
         }
-    ]
+    ];
 
 }
 

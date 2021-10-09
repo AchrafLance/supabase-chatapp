@@ -10,26 +10,54 @@ import { ThemeConstantService } from '../../services/theme-constant.service';
 })
 
 export class HeaderComponent{
-    currentUser:any; 
-    searchVisible : boolean = false;
-    quickViewVisible : boolean = false;
-    isFolded : boolean;
-    isExpand : boolean;
-    headerIsDefaultColor: boolean; 
+
+    currentUser: any;
+    searchVisible = false;
+    quickViewVisible = false;
+    isFolded: boolean;
+    isExpand: boolean;
+    headerIsDefaultColor: boolean;
+
+    notificationList = [
+        {
+            title: 'You received a new message',
+            time: '8 min',
+            icon: 'mail',
+            color: 'ant-avatar-' + 'blue'
+        },
+        {
+            title: 'New user registered',
+            time: '7 hours',
+            icon: 'user-add',
+            color: 'ant-avatar-' + 'cyan'
+        },
+        {
+            title: 'System Alert',
+            time: '8 hours',
+            icon: 'warning',
+            color: 'ant-avatar-' + 'red'
+        },
+        {
+            title: 'You have a new update',
+            time: '2 days',
+            icon: 'sync',
+            color: 'ant-avatar-' + 'gold'
+        }
+    ];
 
     constructor(private authService: AuthenticationService, private router: Router,  private themeService: ThemeConstantService, private subapase: SupabaseService) {}
 
     ngOnInit(): void {
         this.authService.currentUser.subscribe(data => {
-            this.currentUser = data; 
-        })
+            this.currentUser = data;
+        });
         this.themeService.isMenuFoldedChanges.subscribe(isFolded => this.isFolded = isFolded);
         this.themeService.isExpandChanges.subscribe(isExpand => this.isExpand = isExpand);
-        if(this.themeService.headerColor === "primary"){
-            this.headerIsDefaultColor = false; 
+        if (this.themeService.headerColor === 'primary'){
+            this.headerIsDefaultColor = false;
         }
         else{
-            this.headerIsDefaultColor = true; 
+            this.headerIsDefaultColor = true;
         }
     }
 
@@ -58,36 +86,9 @@ export class HeaderComponent{
     }
 
     navigateToPorfil(){
-        this.router.navigate(['/profile'])
+        this.router.navigate(['/profile']);
     }
     navigateToSetting(){
-        this.router.navigate(['/setting'])
+        this.router.navigate(['/setting']);
     }
-
-    notificationList = [
-        {
-            title: 'You received a new message',
-            time: '8 min',
-            icon: 'mail',
-            color: 'ant-avatar-' + 'blue'
-        },
-        {
-            title: 'New user registered',
-            time: '7 hours',
-            icon: 'user-add',
-            color: 'ant-avatar-' + 'cyan'
-        },
-        {
-            title: 'System Alert',
-            time: '8 hours',
-            icon: 'warning',
-            color: 'ant-avatar-' + 'red'
-        },
-        {
-            title: 'You have a new update',
-            time: '2 days',
-            icon: 'sync',
-            color: 'ant-avatar-' + 'gold'
-        }
-    ];
 }

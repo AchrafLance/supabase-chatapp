@@ -1,4 +1,4 @@
-import { Component } from '@angular/core'
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup,  Validators } from '@angular/forms';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
 import { SupabaseService } from 'src/app/shared/services/supabase.service';
@@ -18,7 +18,7 @@ export class LoginComponent {
         }
     }
 
-    constructor(private fb: FormBuilder, private authService:AuthenticationService) {
+    constructor(private fb: FormBuilder, private authService: AuthenticationService) {
     }
 
     ngOnInit(): void {

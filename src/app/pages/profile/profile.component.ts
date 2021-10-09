@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/shared/interfaces/user';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
 
@@ -7,21 +7,12 @@ import { AuthenticationService } from 'src/app/shared/services/authentication.se
 })
 
 export class ProfileComponent implements OnInit {
-    currentUser:User; 
     constructor(private authService: AuthenticationService){
 
     }
+    currentUser: User;
 
-    ngOnInit(){
-        this.authService.currentUser.subscribe((data:User) => {
-            if(data.fullname){
-                this.currentUser = data; 
-            }
-        })
-
-    }
-
-    skillListData = ['Sketch', 'Marvel', 'Photoshop', 'Illustrator', 'Web Design', 'Mobile App Design', 'User Interface', 'User Experience']
+    skillListData = ['Sketch', 'Marvel', 'Photoshop', 'Illustrator', 'Web Design', 'Mobile App Design', 'User Interface', 'User Experience'];
 
     expListData = [
         {
@@ -42,7 +33,7 @@ export class ProfileComponent implements OnInit {
             company: 'Nvidia Corporation',
             date: 'Jul-2016 - Jul 2017'
         }
-    ]
+    ];
 
     eduListData = [
         {
@@ -56,8 +47,8 @@ export class ProfileComponent implements OnInit {
             degree: '',
             school: 'Phillips Academy',
             date: 'Jul-2005 - Jul 2011'
-        }  
-    ]
+        }
+    ];
 
     connectedListData = [
         {
@@ -97,7 +88,7 @@ export class ProfileComponent implements OnInit {
                     name: 'Pamela',
                     img: 'assets/images/avatars/thumb-7.jpg'
                 }
-            ]    
+            ]
         },
         {
             name: 'Weather App',
@@ -117,7 +108,7 @@ export class ProfileComponent implements OnInit {
                     name: 'Wilma Young',
                     img: 'assets/images/avatars/thumb-10.jpg'
                 }
-            ]    
+            ]
         },
         {
             name: 'Music App',
@@ -133,7 +124,7 @@ export class ProfileComponent implements OnInit {
                     name: 'Wilma Young',
                     img: 'assets/images/avatars/thumb-4.jpg'
                 }
-            ]    
+            ]
         }
     ];
 
@@ -159,5 +150,14 @@ export class ProfileComponent implements OnInit {
             rating: 5,
             review: 'The palatable sensation we lovingly refer to as The Cheeseburger has a distinguished and illustrious history. It was born from humble roots, only to rise to well-seasoned greatness.'
         }
-    ]
-}    
+    ];
+
+    ngOnInit(){
+        this.authService.currentUser.subscribe((data: User) => {
+            if (data.fullname){
+                this.currentUser = data;
+            }
+        });
+
+    }
+}

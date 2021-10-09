@@ -3,11 +3,11 @@ import { Observable, BehaviorSubject } from 'rxjs';
 
 @Injectable()
 export class ThemeConstantService {
-    
+
     // Theme Config
-    isMenuFolded: boolean = true
-    isSideNavDark: boolean = false;
-    headerColor: string = 'default';
+    isMenuFolded = true;
+    isSideNavDark = false;
+    headerColor = 'default';
     private colorConfig: any = {
         colors: {
             magenta: '#eb2f96',
@@ -24,7 +24,7 @@ export class ThemeConstantService {
             limeLight: 'rgba(160, 217, 17, 0.1)',
             green: '#52c41a',
             greenLight: 'rgba(82, 196, 26, 0.1)',
-            cyan: "#05c9a7",
+            cyan: '#05c9a7',
             cyanLight: 'rgba(0, 201, 167, 0.1)',
             blue: '#3f87f5',
             blueLight: 'rgba(63, 135, 245, 0.15)',
@@ -63,15 +63,15 @@ export class ThemeConstantService {
         this.isMenuFoldedActived.next(isFolded);
     }
 
-    toogleSideNavDark(isDark:boolean) {
+    toogleSideNavDark(isDark: boolean) {
         this.isSideNavDarkActived.next(isDark);
     }
 
-    toggleExpand(isExpand:boolean) {
+    toggleExpand(isExpand: boolean) {
         this.isExpandActived.next(isExpand);
     }
 
     changeHeaderColor(color: string) {
-        this.currentHeaderColor.next(color)
+        this.currentHeaderColor.next(color);
     }
 }

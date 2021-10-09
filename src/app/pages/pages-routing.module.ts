@@ -21,7 +21,7 @@ const routes: Routes = [
         component: SettingComponent,
         data: {
             title: 'Setting',
-            headerDisplay: "none"
+            headerDisplay: 'none'
         }
     },
 
@@ -30,7 +30,7 @@ const routes: Routes = [
         component: ChatComponent,
         data: {
             title: 'Chat',
-            headerDisplay: "none"
+            headerDisplay: 'none'
         }
     },
 ];
