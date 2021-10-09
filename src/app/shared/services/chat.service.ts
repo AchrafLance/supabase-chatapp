@@ -12,26 +12,41 @@ export class ChatService extends SupabaseSuperclass {
         super()
     }
  
-    async addChat(chat: Chat, contacts) { // WHEN ADDING A NEW MESSAGE
-        const newChat = await this.getSupabase.from(table).insert(chat).single();
-        for (let contact of contacts) {
-            await this.getSupabase.from("users_chats").insert({
-                user_id: contact,
-                chat_id: newChat.data.id
-            })
-        }
-        return newChat
+    /**
+     * Performs insert into chat table, 
+     * Trigger implemented to also link each user to this chat in th users_chats table
+     * 
+     * @param chat 
+     * @returns The chat inserted
+     */
+    async save(chat: Chat) { 
+        return await this.getSupabase.from(table).insert(chat).single();
+        
     }
 
-    async getChatByContactsId(contacts) { // WHEN CLICKING ON A USER
-        return await this.getSupabase.from(table).select()
+    /**
+     * Select a chat object by contacts id, this is used when a user clicks
+     * on an icon from the user list to chat 
+     * 
+     * @param contacts 
+     * @returns 
+     */
+    async getChatByContactsId(contacts:any[]) { 
+        return await this.getSupabase.from("chats").select("*")
             .or(`contact_1.eq.${contacts[0]}, contact_1.eq.${contacts[1]})`)
             .or(`contact_2.eq.${contacts[1]}, contact_2.eq.${contacts[0]})`)
             .single();
     }
 
-    async getChatByChatId(chatId: number) { // WHEN CLICKING ON A CHAT
-        return await this.getSupabase.from("chats").select().match({
+    /**
+     * Select one chat object by its id, this is used when a user clicks on a chat
+     * to load its messages
+     * 
+     * @param chatId 
+     * @returns 
+     */
+    async getChatByChatId(chatId: number) { 
+        return await this.getSupabase.from("chats").select("id, latest_message").match({
             id: chatId
         }).single();
     }

@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { ChatMessage } from "../interfaces/message";
+import { ChatMessage } from "../interfaces/chat-message";
 import { SupabaseSuperclass } from "./supabaseSuperClass";
 
 const table = "messages"; 

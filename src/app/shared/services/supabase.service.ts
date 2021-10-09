@@ -137,11 +137,20 @@ export class SupabaseService {
     })
   }
 
+  //(id, contact_1, contact_2, latest_message)
   getUserChats(userId:any){
-    return this.supabase.from("users_chats").select().match({
+    return this.supabase.from("users_chats").select("id, user_id, chat_id(id, latest_message)").match({
       user_id:userId 
     })
+  }
 
+  getDestinaionContact(chatId:number, originContactId:string){
+    return this.supabase.from("users_chats").select('user_id(id, fullname, avatar_url)')
+                         .match({
+                           chat_id: chatId,
+                         })
+                         .not("user_id","eq",originContactId)
+                         .single()
   }
 
   getUserById(userId:any){
