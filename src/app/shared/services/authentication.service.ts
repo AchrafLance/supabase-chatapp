@@ -28,7 +28,7 @@ export class AuthenticationService {
     async loginWithGoogle(){
      await this.supabaseService.supabase.auth.signIn({
         provider: 'google'
-      },
+      }
     );
 
     }
