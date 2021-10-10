@@ -58,7 +58,7 @@ export class CommonLayoutComponent  {
 
     async getCurrentUser(){ // set current user in localstorage after he signed in
         await this.userService.makeUserOnline();
-        const {data, error} = await this.supabase.getCurrentUser();
+        const {data, error} = await this.userService.getCurrentUser();
         if (data){
             this.authSerivce.currentUserSubject.next(data);
         }

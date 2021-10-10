@@ -4,6 +4,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
 import { UserService } from 'src/app/shared/services/user.service';
+import { BasicUserInfo } from 'src/app/shared/interfaces/basic-user-info';
 
 
 @Component({
@@ -54,7 +55,7 @@ export class SettingComponent implements OnInit {
 
 
     submitBasicInfos(): void {
-        const basicInfos = {
+        const basicInfos:BasicUserInfo = {
             fullname: this.basicInfoForm.get('fullname').value,
             nickname: this.basicInfoForm.get('nickname').value,
             bio: this.basicInfoForm.get('bio').value,

@@ -1,47 +1,94 @@
-import {Injectable} from '@angular/core';
-import {SupabaseService} from './supabase.service';
-import {User} from '../interfaces/user';
+import { Injectable } from '@angular/core';
+import { SupabaseService } from './supabase.service';
+import { BasicUserInfo } from '../interfaces/basic-user-info';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  constructor(private supabase: SupabaseService) {
 
+  constructor(private supabaseService: SupabaseService) {}
+
+  get user() {
+    return this.supabaseService.supabase.auth.user();
   }
 
-  async updateUserAvatar(avatar) {
-    await this.supabase.updateUserAvatar(avatar);
+  getCurrentUser() {
+    return this.supabaseService.supabase
+      .from('users')
+      .select()
+      .match({ id: this.user.id })
+      .single();
   }
 
-  async updateUserBasicInfos(basicInfo) {
-    await this.supabase.updateUserBasicInfos(basicInfo);
+  async updateUserAvatar(avatar:string) {
+    await this.supabaseService.supabase.from('users')
+      .update({
+        avatar_url: avatar
+      })
+      .match({
+        id: this.user.id
+      });
   }
 
-  async updateUserEducation(education){
-   await this.supabase.updateUserEducation(education);
-  }
-  async updateUserExperience(experience){
-    await this.supabase.updateUserExperience(experience);
+  async updateUserBasicInfos(basicInfo:BasicUserInfo) {
+    await this.supabaseService.supabase.from('users')
+      .update(
+        basicInfo
+      )
+      .match({
+        id: this.user.id
+      });
   }
 
-   listOfUsers() {
-   return this.supabase.getUserList();
+  listOfUsers() {
+    return this.supabaseService.supabase.from('users')
+      .select('*');
   }
 
   makeUserOnline() {
-    return this.supabase.makeUserOnline();
+    return this.supabaseService.supabase.from('users').update({
+      isOnline: true
+    }).match({
+      id: this.user.id
+    });
   }
+
   makeUserOffline() {
-    return this.supabase.makeUserOffline();
+    return this.supabaseService.supabase.from('users').update({
+      isOnline: false
+    }).match({
+      id: this.user.id
+    });
   }
 
- async getUserChats(userId: any){
-    return await this.supabase.getUserChats(userId);
+  async getUserChats(userId: any) {
+    return await this.supabaseService.supabase.from('users_chats')
+      .select('id, user_id, chat_id(id, latest_message)')
+      .match({
+        user_id: userId
+      });
   }
 
-  async getUserById(userId: any){
-    return await this.supabase.getUserById(userId);
+  async getUserById(userId: any) {
+    return await this.supabaseService.supabase.from('users').select('id, fullname, avatar_url').match({
+      id: userId
+    }).single();
   }
 
+  /**
+   * getting the destination user of a chat
+   * 
+   * @param chatId   the chat id 
+   * @param originContactId the current user id 
+   * @returns 
+   */
+  getDestinaionContact(chatId: number, originContactId: string) {
+    return this.supabaseService.supabase.from('users_chats').select('user_id(id, fullname, avatar_url)')
+      .match({
+        chat_id: chatId,
+      })
+      .not('user_id', 'eq', originContactId)
+      .single();
+  }
 }

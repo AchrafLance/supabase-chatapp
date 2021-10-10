@@ -1,12 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 
 import { SupabaseService } from './supabase.service';
 import { UserService } from './user.service';
-
-const USER_AUTH_API_URL = '/api-url';
+import { Router } from '@angular/router';
 
 @Injectable({
     providedIn: 'root'
@@ -15,10 +12,12 @@ export class AuthenticationService {
     public currentUserSubject: BehaviorSubject<any>;
     public currentUser: Observable<any>;
 
-    constructor(private http: HttpClient,
-                private supabase: SupabaseService,
-                private userService: UserService) {
-        this.currentUserSubject = new BehaviorSubject<any>(this.supabase.user);
+    constructor(
+                private supabaseService: SupabaseService,
+                private userService: UserService,
+                private router: Router) {
+
+        this.currentUserSubject = new BehaviorSubject<any>(this.userService.user);
         this.currentUser = this.currentUserSubject.asObservable();
     }
 
@@ -26,26 +25,19 @@ export class AuthenticationService {
         return this.currentUserSubject.value;
     }
 
-    login(username: string, password: string) {
-        return this.http.post<any>(USER_AUTH_API_URL, { username, password })
-        .pipe(map(user => {
-            if (user && user.token) {
-                localStorage.setItem('currentUser', JSON.stringify(user));
-                this.currentUserSubject.next(user);
-            }
-            return user;
-        }));
-    }
-
     async loginWithGoogle(){
-     await this.supabase.signInWithGoogle();
+     await this.supabaseService.supabase.auth.signIn({
+        provider: 'google'
+      },
+    );
 
     }
 
     async logout() {
         await this.userService.makeUserOffline();
         this.currentUserSubject.next(null);
-        this.supabase.removeAllSubscriptions();
-        this.supabase.signout();
+        this.supabaseService.removeAllSubscriptions();
+        this.supabaseService.supabase.auth.signOut();
+        this.router.navigate(['/login']);
     }
 }

@@ -1,15 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Chat } from '../interfaces/chat';
-import { SupabaseSuperclass } from './supabaseSuperClass';
+import { SupabaseService } from './supabase.service';
 
 const table = 'chats';
 
 @Injectable({
     providedIn: 'root'
 })
-export class ChatService extends SupabaseSuperclass {
-    constructor() {
-        super();
+export class ChatService {
+    constructor(private supabaseService: SupabaseService) {
     }
 
     /**
@@ -20,7 +19,7 @@ export class ChatService extends SupabaseSuperclass {
      * @returns The chat inserted
      */
     async save(chat: Chat) {
-        return await this.getSupabase.from(table).insert(chat).single();
+        return await this.supabaseService.supabase.from(table).insert(chat).single();
 
     }
 
@@ -32,7 +31,7 @@ export class ChatService extends SupabaseSuperclass {
      * @returns
      */
     async getChatByContactsId(contacts: any[]) {
-        return await this.getSupabase.from('chats').select('*')
+        return await this.supabaseService.supabase.from('chats').select('*')
             .or(`contact_1.eq.${contacts[0]}, contact_1.eq.${contacts[1]})`)
             .or(`contact_2.eq.${contacts[1]}, contact_2.eq.${contacts[0]})`)
             .single();
@@ -46,7 +45,7 @@ export class ChatService extends SupabaseSuperclass {
      * @returns
      */
     async getChatByChatId(chatId: number) {
-        return await this.getSupabase.from('chats').select('id, latest_message').match({
+        return await this.supabaseService.supabase.from('chats').select('id, latest_message').match({
             id: chatId
         }).single();
     }

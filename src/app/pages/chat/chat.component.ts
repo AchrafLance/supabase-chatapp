@@ -112,7 +112,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
                        id: payload.new.id, 
                        latest_message: payload.new.latest_message
                    }
-                   this.supabaseService.getDestinaionContact(chat.id, this.authService.currentUserValue.id).then(data => {
+                   this.userService.getDestinaionContact(chat.id, this.authService.currentUserValue.id).then(data => {
                     chat["contact"] = data.data.user_id;
                     this.chats.push(chat)
                })
@@ -138,7 +138,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
                     latest_message: userChat.chat_id.latest_message
                 }
 
-                this.supabaseService.getDestinaionContact(userChat.chat_id.id, userId).then(data => {
+                this.userService.getDestinaionContact(userChat.chat_id.id, userId).then(data => {
                     chat["contact"] = data.data.user_id;
                     this.chats.push(chat)
                 });
