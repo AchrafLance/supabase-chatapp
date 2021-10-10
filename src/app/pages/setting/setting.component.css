@@ -1,27 +1,39 @@
-.dynamic-delete-button-container{
-display:flex; 
-justify-content: center;
-align-items: center;
+.dynamic-delete-button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .dynamic-delete-button {
   font-size: 1.5rem;
-    cursor: pointer;
-    color: #999;
-    transition: all 0.3s;
-    margin-top: 10px;
+  cursor: pointer;
+  color: #999;
+  transition: all 0.3s;
+  margin-top: 10px;
+}
 
-  }
+.dynamic-delete-button:hover {
+  color: rgb(197, 32, 32);
+}
 
-  .dynamic-delete-button:hover {
-    color: rgb(197, 32, 32);
-  }
+.school-input {
+  width: 100%;
+  margin-right: 8px;
+}
 
-  .school-input {
-    width: 100%;
-    margin-right: 8px;
-  }
+.add-button {
+  width: 100%;
+}
 
-  .add-button {
-    width: 100%;
-  }
+input.ng-invalid.ng-touched, nz-select.ng-invalid.ng-touched {
+  border: 1px solid red;
+}
+
+.error-msg {
+  color: red;
+  margin: 2px 0;
+}
+
+.error-msg i {
+  margin-right: 3px;
+}

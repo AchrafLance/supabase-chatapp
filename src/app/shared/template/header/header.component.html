@@ -35,7 +35,7 @@
                             <div class="d-flex m-r-50">
                                 <nz-avatar nzSize="large" [nzSrc]="currentUser.avatar_url"></nz-avatar>
                                 <div class="m-l-10">
-                                    <p class="m-b-0 text-dark font-weight-semibold">{{currentUser.fullname}}</p>
+                                    <p class="m-b-0 text-dark font-weight-semibold">{{currentUser.fullname | fullnameFormat}}</p>
                                     <p class="m-b-0 opacity-07">New member</p>
                                 </div>
                             </div>

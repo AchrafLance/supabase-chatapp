@@ -76,7 +76,7 @@ export class SupabaseService {
     return this.supabase
       .from('users')
       .update({
-        avatarurl: avatar
+        avatar_url: avatar
       })
       .match({
         id: this.user.id
@@ -86,9 +86,9 @@ export class SupabaseService {
   updateUserBasicInfos(basicInfo) {
     return this.supabase
       .from('users')
-      .update({
+      .update(
         basicInfo
-      })
+      )
       .match({
         id: this.user.id
       });

@@ -6,6 +6,7 @@ import { AuthenticationService } from '../../services/authentication.service';
 import { SharedService } from '../../services/shared.service';
 import { User } from '../../interfaces/user';
 import { SupabaseService } from '../../services/supabase.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-sidenav',
@@ -24,15 +25,17 @@ export class SideNavComponent{
                  private userService: UserService,
                  private authService: AuthenticationService,
                  private sharedService: SharedService,
-                 private supabaseService: SupabaseService) {}
+                 private supabaseService: SupabaseService, 
+                 private router: Router) {}
 
     ngOnInit(): void {
 
 
         this.authService.currentUser.subscribe((data: User) => {
             if (data){
-              this.getUsers();
-              this.listenToUsers(); 
+              this.getUsers().then(data =>{
+                this.listenToUsers(); 
+              });
             }
          });
 
@@ -64,6 +67,7 @@ export class SideNavComponent{
     }
 
     closeMobileMenu(user: User): void {
+        this.router.navigate(["/chat"])
         this.sharedService.selectedUserSubject.next(user);
 
         if (window.innerWidth < 992) {

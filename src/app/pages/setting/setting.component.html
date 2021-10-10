@@ -1,22 +1,22 @@
 <div class="page-header has-tab">
-    <h2 class="font-weight-normal">Parametres</h2>
+    <h2 class="font-weight-normal">Settings</h2>
 </div>
 <nz-tabset class="page-header-tab">
-    <nz-tab nzTitle="Compte">
-        <div class="container">
-            <nz-card nzTitle="Infomation Basic">
+    <nz-tab nzTitle="Account">
+        <div class="container" *ngIf="currentUser">
+            <nz-card nzTitle="Basic Infos">
                 <div class="media align-items-center">
                     <nz-avatar [nzSize]="80" nzIcon="user" [nzSrc]="currentUser.avatar_url"></nz-avatar>
                     <div class="m-l-20 m-r-20">
-                        <h5 class="m-b-5 font-size-18">Photo de profile</h5>
+                        <h5 class="m-b-5 font-size-18">Profil Picture</h5>
                         <p class="opacity-07 font-size-13 m-b-0">
-                            Dimensions recommandées: <br>
-                            120x120 Taille maximale du fichier: 5MB
+                            Recommended dimensions: <br>
+                            120x120 Max file size: 5MB
                         </p>
                     </div>
                     <nz-upload nzName="avatar" [nzShowUploadList]="false" (nzChange)="handleChange($event)">
                         <button nz-button nzType="primary">
-                            <span>Telecharger</span>
+                            <span>Download</span>
                         </button>
                     </nz-upload>
                 </div>
@@ -25,9 +25,14 @@
                     <div class="row">
                         <div class="col-md-6">
                             <nz-form-item>
-                                <nz-form-label>Nom complet</nz-form-label>
+                                <nz-form-label>Full Name</nz-form-label>
                                 <nz-form-control>
                                     <input nz-input placeholder="Nom complet" formControlName="fullname">
+                                    <div *ngIf="basicInfoForm.controls.fullname.touched && basicInfoForm.controls.fullname.errors" class="error-msg">
+                                        <div *ngIf="basicInfoForm.controls.fullname.errors.required">
+                                            <i nz-icon nzType="exclamation-circle" nzTheme="outline"></i> Fullname is required
+                                        </div>
+                                    </div>
                                 </nz-form-control>
                             </nz-form-item>
                         </div>
@@ -36,6 +41,11 @@
                                 <nz-form-label>Nickname</nz-form-label>
                                 <nz-form-control>
                                     <input nz-input placeholder="Nickname" type="text" formControlName="nickname">
+                                    <div *ngIf="basicInfoForm.controls.nickname.touched && basicInfoForm.controls.nickname.errors" class="error-msg">
+                                        <div *ngIf="basicInfoForm.controls.nickname.errors.required">
+                                            <i nz-icon nzType="exclamation-circle" nzTheme="outline"></i> Nickname is required
+                                        </div>
+                                    </div>
                                 </nz-form-control>
                             </nz-form-item>
                         </div>
@@ -44,26 +54,15 @@
                     <div class="row">
                         <div class="col-md-12">
                             <nz-form-item>
-                                <nz-form-label>Profile</nz-form-label>
-                                <nz-form-control>
-                                    <nz-select formControlName="profile" nzPlaceHolder="Profile">
-                                        <nz-option nzValue="Frontend Developer" nzLabel="Frontend Developer"></nz-option>
-                                        <nz-option nzValue="Fullstack Developer" nzLabel="Fullstack Developer"></nz-option>
-                                        <nz-option nzValue="Backend Developer" nzLabel="Backend Developer"></nz-option>
-                                        <nz-option nzValue="Responsable RH" nzLabel="Responsable RH"></nz-option>
-                                        <nz-option nzValue="Chef de Projet" nzLabel="Chef de Projet"></nz-option>
-                                    </nz-select>
-                                </nz-form-control>
-                            </nz-form-item>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <nz-form-item>
-                                <nz-form-label>Biographie</nz-form-label>
+                                <nz-form-label>Bio</nz-form-label>
                                 <nz-form-control>
                                     <textarea nz-input formControlName="bio" placeholder="Biographie"
                                         type="text"></textarea>
+                                        <div *ngIf="basicInfoForm.controls.bio.touched && basicInfoForm.controls.bio.errors" class="error-msg">
+                                            <div *ngIf="basicInfoForm.controls.bio.errors.required">
+                                                <i nz-icon nzType="exclamation-circle" nzTheme="outline"></i> Bio is required
+                                            </div>
+                                        </div>
                                 </nz-form-control>
                             </nz-form-item>
                         </div>
@@ -72,17 +71,27 @@
                     <div class="row">
                         <div class="col-md-6">
                             <nz-form-item>
-                                <nz-form-label>Telephone</nz-form-label>
+                                <nz-form-label>Phone</nz-form-label>
                                 <nz-form-control>
                                     <input nz-input formControlName="phone" placeholder="Telephone">
+                                    <div *ngIf="basicInfoForm.controls.phone.touched && basicInfoForm.controls.phone.errors" class="error-msg">
+                                        <div *ngIf="basicInfoForm.controls.phone.errors.required">
+                                            <i nz-icon nzType="exclamation-circle" nzTheme="outline"></i> Phone is required
+                                        </div>
+                                    </div>
                                 </nz-form-control>
                             </nz-form-item>
                         </div>
                         <div class="col-md-6">
                             <nz-form-item>
-                                <nz-form-label>Adresse Compléte</nz-form-label>
+                                <nz-form-label>Full address</nz-form-label>
                                 <nz-form-control>
                                     <input nz-input formControlName="adresse" placeholder="Adresse Compléte">
+                                    <div *ngIf="basicInfoForm.controls.adresse.touched && basicInfoForm.controls.adresse.errors" class="error-msg">
+                                        <div *ngIf="basicInfoForm.controls.adresse.errors.required">
+                                            <i nz-icon nzType="exclamation-circle" nzTheme="outline"></i> Adresse is required
+                                        </div>
+                                    </div>
                                 </nz-form-control>
                             </nz-form-item>
                         </div>
@@ -90,203 +99,34 @@
                     <div class="row">
                         <div class="col-md-12">
                             <nz-form-item>
-                                <nz-form-label>Date de naissance</nz-form-label>
+                                <nz-form-label>Birth Date</nz-form-label>
                                 <nz-form-control>
                                     <nz-date-picker formControlName="birth_date" class="w-100" nzFormat="yyyy/MM/dd"
                                         nzPlaceHolder="Date of Birth"></nz-date-picker>
+                                        <div *ngIf="basicInfoForm.controls.birth_date.touched && basicInfoForm.controls.birth_date.errors" class="error-msg">
+                                            <div *ngIf="basicInfoForm.controls.birth_date.errors.required">
+                                                <i nz-icon nzType="exclamation-circle" nzTheme="outline"></i> Birth Date is required
+                                            </div>
+                                        </div>
                                 </nz-form-control>
                             </nz-form-item>
                         </div>
                     </div>
                     <div class="row">
                            <div class="col-md-12">
-                               <!-- SUBMIT BUTTON -->
                                <nz-form-item>
                                 <nz-form-control>
-                                    <button nz-button nzType="primary" type="submit">Enregistrer</button>
+                                    <button nz-button 
+                                            nzType="primary" 
+                                            type="submit"
+                                            [disabled]="basicInfoForm.invalid">Save</button>
                                 </nz-form-control>
-                                                       </nz-form-item>
+                                </nz-form-item>
                            </div>
                     </div>
                     <hr class="m-v-25">
                 </form>
             </nz-card>
-
-            <!-- EDUCATION CARD -->
-            <div class="container">
-                <nz-card nzTitle="Education">
-                    <form nz-form [nzLayout]="'vertical'" [formGroup]="educationForm" (ngSubmit)="submitEducationForm()">
-                        <!-- EDUCATION ITEM -->
-                        <div *ngFor="let control of listOfEducationControl; let i = index">
-                            <div class="row">
-                                <!-- SCHOOOL -->
-                                <div class="col-md-5">
-                                    <nz-form-item>
-                                        <nz-form-label>Ecole/Universite</nz-form-label>
-                                        <nz-form-control nzErrorTip="field is required.">
-                                            <input class="school-input" nz-input placeholder="Ecole/Universite"
-                                                [attr.id]="control.id" [formControlName]="control.universite" />
-                                        </nz-form-control>
-                                    </nz-form-item>
-                                </div>
-                                <!-- TIMELINE -->
-                                <div class="col-md-5">
-                                    <nz-form-label>intervalle de temps</nz-form-label>
-                                    <nz-form-item>
-                                        <nz-range-picker  [formControlName]="control.graduationDate" ></nz-range-picker>
-                                    </nz-form-item>
-                                </div>
-                                <!-- DELETE ITEM ICON -->
-                                <div class="col-md-2 dynamic-delete-button-container">
-                                    <i nz-icon nzType="minus-circle-o" class="dynamic-delete-button"
-                                        (click)="removeEducationField(control, $event)"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- ADD NEW EDUCATION ITEM BUTTON -->
-                        <nz-form-item>
-                            <nz-form-control>
-                                <button nz-button nzType="dashed" class="add-button" (click)="addEducationField($event)">
-                                    <i nz-icon nzType="plus-circle" nzTheme="outline"></i>
-                                    Ajouter
-                                </button>
-                            </nz-form-control>
-                        </nz-form-item>
-                        <!-- SUBMIT BUTTON -->
-                        <nz-form-item>
-                            <nz-form-control>
-                                <button nz-button nzType="primary" type="submit">Enregistrer</button>
-                            </nz-form-control>
-                        </nz-form-item>
-                    </form>
-                </nz-card>
-            </div>
-
-              <!-- EXPERIENCE CARD -->
-              <div class="container">
-                <nz-card nzTitle="Experience">
-                    <form nz-form [nzLayout]="'vertical'" [formGroup]="experienceForm" (ngSubmit)="submitExperienceForm()">
-                        <!-- EXPERIENCE ITEM -->
-                        <div *ngFor="let control of listOfExperienceControl; let i = index">
-                            <div class="row">
-                                <!-- EXPERIENCE -->
-                                <div class="col-md-5">
-                                    <nz-form-item>
-                                        <nz-form-label>Entreprise</nz-form-label>
-                                        <nz-form-control nzErrorTip="field is required.">
-                                            <input class="school-input" nz-input placeholder="Entreprise"
-                                                [attr.id]="control.id" [formControlName]="control.entreprise"/>
-                                        </nz-form-control>
-                                    </nz-form-item>
-                                </div>
-                                <!-- TIMELINE -->
-                                <div class="col-md-5">
-                                    <nz-form-label>intervalle de temps</nz-form-label>
-                                    <nz-form-item>
-                                        <nz-range-picker  [formControlName]="control.graduationDate" ></nz-range-picker>
-                                    </nz-form-item>
-                                </div>
-                                <!-- DELETE ITEM ICON -->
-                                <div class="col-md-2 dynamic-delete-button-container">
-                                    <i nz-icon nzType="minus-circle-o" class="dynamic-delete-button"
-                                        (click)="removeExperienceField(control, $event)"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- ADD NEW EXPERIENCE ITEM BUTTON -->
-                        <nz-form-item>
-                            <nz-form-control>
-                                <button nz-button nzType="dashed" class="add-button" (click)="addExperienceField($event)">
-                                    <i nz-icon nzType="plus-circle" nzTheme="outline"></i>
-                                    Ajouter
-                                </button>
-                            </nz-form-control>
-                        </nz-form-item>
-                        <!-- SUBMIT BUTTON -->
-                        <nz-form-item>
-                            <nz-form-control>
-                                <button nz-button nzType="primary" type="submit">Enregistrer</button>
-                            </nz-form-control>
-                        </nz-form-item>
-                    </form>
-                </nz-card>
-            </div>
-        </div>
-    </nz-tab>
-
-    <!-- NETWORK TAB -->
-    <nz-tab nzTitle="Network">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-8 mx-auto">
-                    <nz-card nzTitle="Network Integration">
-                        <nz-list [nzDataSource]="networkList" [nzRenderItem]="network" [nzItemLayout]="'horizontal'">
-                            <ng-template #network let-item>
-                                <nz-list-item [nzActions]="[moreAction]">
-                                    <ng-template #moreAction>
-                                        <span class="m-r-10 text-gray" *ngIf="item.status">{{item.link}}</span>
-                                        <nz-switch [ngModel]="item.status" [nzCheckedChildren]="checkedTemplate"
-                                            [nzUnCheckedChildren]="unCheckedTemplate"></nz-switch>
-                                        <ng-template #checkedTemplate><i class="font-size-12" nz-icon
-                                                nzType="check"></i>
-                                        </ng-template>
-                                        <ng-template #unCheckedTemplate><i class="font-size-12" nz-icon
-                                                nzType="close"></i>
-                                        </ng-template>
-                                    </ng-template>
-                                    <nz-list-item-meta [nzTitle]="networkName" [nzAvatar]="networkIcon">
-                                        <ng-template #networkIcon>
-                                            <nz-avatar [nzIcon]="item.icon"
-                                                [ngStyle]="{'color': item.avatarColor, 'background': item.avatarBg}">
-                                            </nz-avatar>
-                                        </ng-template>
-                                        <ng-template #networkName>
-                                            <div class="font-size-15 font-weight-semibold m-t-10">{{item.name}}</div>
-                                        </ng-template>
-                                    </nz-list-item-meta>
-                                </nz-list-item>
-                            </ng-template>
-                        </nz-list>
-                    </nz-card>
-                </div>
-            </div>
-        </div>
-    </nz-tab>
-
-    <!-- NOTIFICATION TAB -->
-    <nz-tab nzTitle="Notification">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-8 mx-auto">
-                    <nz-card nzTitle="Notification Config">
-                        <nz-list [nzDataSource]="notificationConfigList" [nzRenderItem]="notification"
-                            [nzItemLayout]="'horizontal'">
-                            <ng-template #notification let-item>
-                                <nz-list-item [nzActions]="[configStatus]">
-                                    <ng-template #configStatus>
-                                        <nz-switch [ngModel]="item.status" [nzCheckedChildren]="checkedTemplate2nd"
-                                            [nzUnCheckedChildren]="unCheckedTemplate2nd"></nz-switch>
-                                        <ng-template #checkedTemplate2nd><i class="font-size-12" nz-icon
-                                                nzType="check"></i></ng-template>
-                                        <ng-template #unCheckedTemplate2nd><i class="font-size-12" nz-icon
-                                                nzType="close"></i></ng-template>
-                                    </ng-template>
-                                    <nz-list-item-meta [nzTitle]="notificationTitle" [nzAvatar]="notificationIcon">
-                                        <ng-template #notificationIcon>
-                                            <nz-avatar [nzIcon]="item.icon" [ngClass]="item.color" class="m-t-5">
-                                            </nz-avatar>
-                                        </ng-template>
-                                        <ng-template #notificationTitle>
-                                            <h5 class="font-weight-semibold m-b-0">{{item.title}}</h5>
-                                            <p class="m-b-0 font-weight-normal">{{item.desc}}</p>
-                                        </ng-template>
-                                    </nz-list-item-meta>
-                                </nz-list-item>
-                            </ng-template>
-                        </nz-list>
-                    </nz-card>
-                </div>
-            </div>
         </div>
     </nz-tab>
 </nz-tabset>
