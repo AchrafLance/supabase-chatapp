@@ -32,27 +32,31 @@ export class SideNavComponent{
         this.authService.currentUser.subscribe((data: User) => {
             if (data){
               this.getUsers();
+              this.listenToUsers(); 
             }
          });
 
-        // listen to users table
-        this.supabaseService.supabase.from('users')
-         .on('UPDATE', payload => {
-             let index = null;
-             index = this.usersList.findIndex( user => user.id === payload.new.id);
-             console.log('index', index);
-             if (index != null){
-                 this.usersList[index] = payload.new;
-                 console.log('new user list', this.usersList);
-             }
-         }).subscribe();
+      
 
         this.themeService.isMenuFoldedChanges.subscribe(isFolded => this.isFolded = isFolded);
         this.themeService.isExpandChanges.subscribe(isExpand => this.isExpand = isExpand);
         this.themeService.isSideNavDarkChanges.subscribe(isDark => this.isSideNavDark = isDark);
     }
 
-    async getUsers() {
+    private listenToUsers(){
+          this.supabaseService.supabase.from('users')
+          .on('UPDATE', payload => {
+              let index = null;
+              index = this.usersList.findIndex( user => user.id === payload.new.id);
+              console.log('index', index);
+              if (index != null){
+                  this.usersList[index] = payload.new;
+                  console.log('new user list', this.usersList);
+              }
+          }).subscribe();
+    }
+
+    private async getUsers() {
         const { data } = await this.userService.listOfUsers();
         if (data) {
             this.usersList = data.filter(user => user.id != this.authService.currentUserValue.id);

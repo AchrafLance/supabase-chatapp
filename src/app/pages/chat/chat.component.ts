@@ -1,5 +1,5 @@
 import { Component, AfterViewChecked, ElementRef, ViewChild, OnInit } from '@angular/core';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject, iif, Observable, of } from 'rxjs';
 import { ChatMessage } from 'src/app/shared/interfaces/chat-message';
 import { User } from 'src/app/shared/interfaces/user';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
@@ -28,8 +28,8 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     contactDestination: string;
     chat: Chat;
     contacts: string[] = [];
-    chats = [];
-    temp = [];
+    chats: Chat[]= [];
+    temp: Chat[] = [];
 
     constructor(
         private sharedService: SharedService,
@@ -37,10 +37,8 @@ export class ChatComponent implements OnInit, AfterViewChecked {
         private messageService: MessageService,
         private chatService: ChatService,
         private authService: AuthenticationService,
-        private supabaseService: SupabaseService) {
-        this.chatListSubject = new BehaviorSubject<any>([]);
-        this.chatList = this.chatListSubject.asObservable();
-    }
+        private supabaseService: SupabaseService) {}
+
 
     ngOnInit() {
 
@@ -57,11 +55,6 @@ export class ChatComponent implements OnInit, AfterViewChecked {
             }
         });
 
-        this.chatList.subscribe(data => {
-            this.chats = data;
-        });
-
-
         this.sharedService.selectedUser.subscribe(selectedUser => {
             if (selectedUser) {
                 this.isContentOpen = true;
@@ -70,18 +63,17 @@ export class ChatComponent implements OnInit, AfterViewChecked {
                 this.contacts[1] = selectedUser.id;
                 this.chatService.getChatByContactsId(this.contacts).then(data => {
                     if (data.data) {
-                        // console.log("selected chat", data.data)
                         this.chat = data.data;
                         return this.messageService.getChatMessages(this.chat.id);
                     }
                 })
-                .then(data => {
-                    if (data){
-                        this.messagesList = data.data;
-                    }
-                }).catch(error => {
-                    console.error('ERROR ADDING CHAT - ', error);
-                });
+                    .then(data => {
+                        if (data) {
+                            this.messagesList = data.data;
+                        }
+                    }).catch(error => {
+                        console.error('ERROR ADDING CHAT - ', error);
+                    });
             }
         });
 
@@ -95,23 +87,38 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     private initSupabaseListeners(): void {
 
         this.supabaseService.supabase.from('messages')
-        .on('INSERT', payload => {
-            if (payload.new.sender !== this.authService.currentUserValue.id) {
-                this.userService.getUserById(payload.new.sender).then(data => {
-                    payload.new.sender = data.data;
-                    this.messagesList.push(payload.new);
-                });
-            }
-        }).subscribe();
+            .on('INSERT', payload => {
+                if (payload.new.sender !== this.authService.currentUserValue.id) {
+                    this.userService.getUserById(payload.new.sender).then(data => {
+                        payload.new.sender = data.data;
+                        this.messagesList.push(payload.new);
+                    });
+                }
+            }).subscribe();
 
         this.supabaseService.supabase.from('users')
-        .on('UPDATE', payload => {
-            let index = null;
-            index = this.usersList.findIndex(user => user.id === payload.new.id);
-            if (index != null) {
-                this.usersList[index] = payload.new;
-            }
-        }).subscribe();
+            .on('UPDATE', payload => {
+                let index = null;
+                index = this.usersList.findIndex(user => user.id === payload.new.id);
+                if (index != null) {
+                    this.usersList[index] = payload.new;
+                }
+            }).subscribe();
+
+        this.supabaseService.supabase.from('chats')
+            .on('INSERT', payload => {
+                   console.log('new chat, ', payload.new); 
+                   let chat: Chat  ={
+                       id: payload.new.id, 
+                       latest_message: payload.new.latest_message
+                   }
+                   this.supabaseService.getDestinaionContact(chat.id, this.authService.currentUserValue.id).then(data => {
+                    chat["contact"] = data.data.user_id;
+                    this.chats.push(chat)
+               })
+            }).subscribe();
+
+
     }
 
     private async getUsers() {
@@ -126,61 +133,38 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
         if (response.body) {
             for (const userChat of response.body) {
-                let chat:{chat_id:string, latest_message:string, contact:string};
-                chat.chat_id = userChat.chat_id.id;
-                chat.latest_message = userChat.chat_id.latest_message;
+                let chat: Chat = {
+                    id: userChat.chat_id.id,
+                    latest_message: userChat.chat_id.latest_message
+                }
+
                 this.supabaseService.getDestinaionContact(userChat.chat_id.id, userId).then(data => {
-                chat.contact = data.data.user_id;
-                this.temp = this.chatListSubject.value;
-                this.temp.push(chat);
+                    chat["contact"] = data.data.user_id;
+                    this.chats.push(chat)
                 });
             }
-            this.chatListSubject.next(this.temp);
         }
 
     }
 
-    selectChat(chat: any) {
-        this.chat = chat;
-        console.log('selected chat', chat);
-        this.chatIdentifer = chat.contact.fullname;
-        this.isContentOpen = true;
+    private async createNewChat(msg: string) {
+        const newChat: Chat = {
+            contact_1: this.contacts[0],
+            contact_2: this.contacts[1],
+            created_at: new Date,
+            latest_message: msg
+        };
 
-        // GET Messages by chatId
-        this.messageService.getChatMessages(chat.chat_id).then(data => {
-            if (data.data) {
-                this.messagesList = data.data;
-            }
-            else {
-                this.messagesList = [];
-            }
-        });
-
-    }
-
-
-
-    async sendMsg(msg: string) {
-
-        // IF MESSAGE LIST EMPTY, CREATE NEW CHAT
-        if (this.messagesList.length == 0) {
-            const newChat: Chat = {
-                contact_1: this.contacts[0],
-                contact_2: this.contacts[1],
-                created_at: new Date,
-                latest_message: msg
-            };
-            console.log('new chat', newChat);
-            const { data, error } = await this.chatService.save(newChat);
-            if (data){
+        const { data, error } = await this.chatService.save(newChat);
+        if (data) {
             this.chat = data;
-            console.log('chat created', this.chat);
-           }
-           else{
-               alert(JSON.stringify(error));
-           }
         }
+        else {
+            console.log(error)
+        }
+    }
 
+    private async insertNewMessage(msg: string){
         // INSERT NEW MESSAGE
         const message: ChatMessage = {
             chat_id: this.chat.id,
@@ -191,11 +175,37 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
         const { data, error } = await this.messageService.addNewMessage(message);
         const savedMessage = await this.messageService.getMessageById(data.id); // doing query twice cuz ineed the sender foreign table
+        return savedMessage; 
+    }
+
+    selectChat(chat: Chat) {
+        this.chat = chat;
+        this.chatIdentifer = chat.contact.fullname;
+        this.isContentOpen = true;
+
+        this.messageService.getChatMessages(chat.id).then(data => {
+            if (data.data) {
+                this.messagesList = data.data;
+            }
+            else {
+                this.messagesList = [];
+            }
+        });
+
+    }
+
+    async sendMsg(msg: string) {
+
+        if (this.messagesList.length == 0) {
+            await this.createNewChat(msg)
+        }
+
+        const savedMessage = await this.insertNewMessage(msg)
+        
         if (savedMessage.data) {
             this.messagesList.push(savedMessage.data);
             this.msgInput.nativeElement.value = '';
         }
-
     }
 
     closeChatContent() {
