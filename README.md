@@ -1,27 +1,28 @@
-# Enlink
+# Realtime Chat App using Supabase/Angular 
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.6.
+#### A full-stack chat app using supabase for the backend and angular as the frontend framework 
+#### Hosted demo: [https://priceless-allen-1c584b.netlify.app/](https://priceless-allen-1c584b.netlify.app)
+![chat app capture](https://user-images.githubusercontent.com/38834042/136698620-c0987dae-a275-479e-974d-568d52d876e0.PNG)
 
-## Development server
+## Stack 
+ - Supabase
+ - Angular
+ - Ng-zorro, Bootstrap 
+ 
+## Features
+- Google Oauth
+- Realtime messaging
+- persisted messages 
+- profil customization
+## Suapabase Usage
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+### Authentication
+User Google Oauth provider.
 
-## Code scaffolding
+### Database Strucutre
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+![database structure](https://user-images.githubusercontent.com/38834042/136705235-54913527-e074-4c75-85c2-8b3c6a55ae2c.jpg)
 
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+### Supabase Realtime
+Used to listen to inserts on the messsages and chats to table to update messages and chatlist for all users in realtime.
+Also used to to listen to updates on the users table, to display realtime user status(online/offline). 
