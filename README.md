@@ -17,12 +17,12 @@
 ## Suapabase Usage
 
 ### Authentication
-User Google Oauth provider.
+Used Google Oauth provider.
 
 ### Database Strucutre
 
 ![database structure](https://user-images.githubusercontent.com/38834042/136705235-54913527-e074-4c75-85c2-8b3c6a55ae2c.jpg)
 
 ### Supabase Realtime
-Used to listen to inserts on the messsages and chats to table to update messages and chatlist for all users in realtime.
-Also used to to listen to updates on the users table, to display realtime user status(online/offline). 
+Used to listen to inserts on the messsages and chats tables to update messages and chatlist for all users in realtime.
+Also used to listen to updates on the users table, to display realtime user status(online/offline). 
