@@ -4,6 +4,9 @@
 #### Hosted demo: [https://priceless-allen-1c584b.netlify.app/](https://priceless-allen-1c584b.netlify.app/)
 ![chat app capture](https://user-images.githubusercontent.com/38834042/136698620-c0987dae-a275-479e-974d-568d52d876e0.PNG)
 
+## Team 
+just me => email: achraf.contacts@gmail.com, twitter: @AElkhandouli
+
 ## Stack 
  - Supabase
  - Angular
