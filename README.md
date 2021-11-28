@@ -2,7 +2,7 @@
 
 #### A full-stack chat app using supabase for the backend and angular as the frontend framework 
 #### Hosted demo: [https://priceless-allen-1c584b.netlify.app/](https://priceless-allen-1c584b.netlify.app/)
-![chat app capture](https://user-images.githubusercontent.com/38834042/136698620-c0987dae-a275-479e-974d-568d52d876e0.PNG)
+![chat app](https://user-images.githubusercontent.com/38834042/143773674-68b238b8-2b77-417f-8c6a-3e7a9eaae533.PNG)
 
 ## Team 
 just me => email: achraf.contacts@gmail.com, twitter: @AElkhandouli
