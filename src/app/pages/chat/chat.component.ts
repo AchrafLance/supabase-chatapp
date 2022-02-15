@@ -88,6 +88,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
         this.supabaseService.supabase.from('messages')
             .on('INSERT', payload => {
+                console.log("new message added ", payload)
                 if (payload.new.sender !== this.authService.currentUserValue.id) {
                     this.userService.getUserById(payload.new.sender).then(data => {
                         payload.new.sender = data.data;
